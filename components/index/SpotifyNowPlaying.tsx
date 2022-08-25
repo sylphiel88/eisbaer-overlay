@@ -53,7 +53,7 @@ export default function SpotifyNowPlaying(props: {
     } else{
       setRefreshSpotify(0)
     }
-  }, [props.useSpotify]);
+  }, [props.useSpotify, refreshSpotify]);
 
   useEffect(()=>{
     setWidth(currPos/duration * 100)
@@ -74,7 +74,7 @@ export default function SpotifyNowPlaying(props: {
   ) {    
     if (props.useSpotify) {
       axios
-        .get("http://localhost:3000/api/spotify/spotify")
+        .get("http://localhost:3000/api/spotify/spotify",{headers:{"content-type":"application.json"}})
         .then((response) => setResponse(response.data)).finally(()=>{
           setTimeout(() => setRefreshSpotify(refreshSpotify+1), 1000);
         });
