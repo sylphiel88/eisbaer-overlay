@@ -45,7 +45,7 @@ export default function SpotifyNowPlaying(props: {
         },
       });
     }
-  }, [refreshSpotify, getCurrentTitle, props.useSpotify]);
+  }, [props.useSpotify]);
 
   useEffect(() => {
     if (props.useSpotify===true) {
@@ -53,7 +53,7 @@ export default function SpotifyNowPlaying(props: {
     } else{
       setRefreshSpotify(0)
     }
-  }, [props.useSpotify, refreshSpotify, getCurrentTitle]);
+  }, [props.useSpotify]);
 
   useEffect(()=>{
     setWidth(currPos/duration * 100)
