@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Ultra&display=swap');
+
+.slot-machine {
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    gap: 30px;
+    height: 350px;
+    width: 920px;
+    overflow: hidden;
+    background-color: rgb(82, 71, 71);
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 225px;
+    left: 190px;
+}
+.slot-wrapper {
+    position: relative;
+    height: 310px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.slots {
+    position: absolute;
+    width: 100%;
+    height: 310px;
+    transition: top ease-in-out 0.5s;
+    text-align: center;
+    line-height: 310px;
+}
+
+.slots > div > span {
+    -webkit-text-stroke: 2px rgb(58, 31, 12);
+    color:rgb(180, 154, 112);
+    font-size: 60px;
+    font-family: 'Ultra';
+}
+
+.slot-machine-image {
+    height: 600px;
+    z-index: 1;
+    position: absolute;
+}
+
+.slot-button {
+    z-index: 3;
+    position: absolute;
+    top: 113px;
+    right: 159px;
+    background-color: rgba(0,0,0,0) !important;
+    height: 107px;
+    width: 107px;
+    font-size: 22pt;
+    line-height: 70px;
+    -webkit-text-stroke: 2px rgb(58, 31, 12);
+    color:rgb(180, 154, 112);
+}
+
+.slots > div {
+    height: 310px;
+}
+
+.shadow-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    top: -49%;
+    z-index: 100;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: showShadow 0.5s linear 0.5s 1 forwards;
+    transition: opacity 0.2s ease;
+}
+
+.exclamation-1 {
+    opacity: 0;
+    animation: showShadow 0.5s linear 2s 1 forwards;
+}
+.exclamation-2 {
+    opacity: 0;
+    animation: showShadow 0.5s linear 2.5s 1 forwards;
+}
+.exclamation-3 {
+    opacity: 0;
+    animation: showShadow 0.5s linear 3s 1 forwards;
+}
+
+@keyframes showShadow {
+    100%{
+        opacity: 1;
+    }
+}
+
+.year-result {
+    opacity: 0;
+    font-size: 50pt;
+    animation: yearresanim 4s linear 1s 1 forwards;
+}
+
+@keyframes yearresanim {
+    0% {
+        opacity: 0;
+    };
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

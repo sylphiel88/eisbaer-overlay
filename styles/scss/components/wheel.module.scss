@@ -1,0 +1,120 @@
+@use "sass:math";
+
+$countOfFields: 43;
+$baseValueRotate: calc(360 / $countOfFields);
+$baseValueSkew: calc($baseValueRotate + 90);
+
+.wheel {
+  z-index: 2;
+  height: 95%;
+  aspect-ratio: 1/1;
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: rgba(50, 50, 50, 0);
+  box-shadow: 0 0 20px gray;
+  transform-origin: center;
+  margin-left: 300px;
+  transform: rotate(var(--wheel-rotation));
+}
+
+.wheel-rotating {
+  z-index: 2;
+  height: 95%;
+  aspect-ratio: 1/1;
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: rgba(50, 50, 50, 0);
+  box-shadow: 0 0 20px gray;
+  transform-origin: center;
+  margin-left: 300px;
+  animation: wheel-rotation-animation 12s linear forwards;
+}
+
+.wheel-2 {
+  z-index: 1;
+  top: -97%;
+}
+
+@mixin wheel-rotation {
+  @for $i from 1 through $countOfFields {
+    &:nth-child(#{$i}) {
+      transform: rotate(#{$baseValueRotate * $i}deg);
+    }
+  }
+}
+
+@mixin wheel-rotation-with-skew {
+  @for $i from 1 through $countOfFields {
+    &:nth-child(#{$i}) {
+      transform: rotate(#{$baseValueRotate * $i}deg)
+        skewY(#{$baseValueSkew}deg);
+    }
+  }
+}
+
+@mixin wheel-color {
+  &:nth-child(even) {
+    background-color: $wheel-color-1;
+  }
+  &:nth-child(odd) {
+    background-color: $wheel-color-2;
+  }
+}
+
+.wheel-field-color {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0% 100%;
+  @include wheel-color();
+  @include wheel-rotation-with-skew();
+  border: 1px solid rgb(61, 61, 61);
+}
+
+.wheel-field {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0% 100%;
+  @include wheel-rotation();
+  writing-mode: vertical-lr;
+  padding-top: 7px;
+  padding-left: 3px;
+  pointer-events: none;
+}
+
+.wheel-field-contents {
+  position: absolute;
+  left: -100%;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+}
+
+.pointer {
+  z-index: 101;
+  top: 47.5%;
+  right: 62%;
+  position: absolute;
+  width: 50px;
+  height: 25px;
+  background-color: grey;
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+
+@keyframes wheel-rotation-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(var(--wheel-rotation));
+  }
+}

@@ -1,0 +1,8 @@
+@import 'variables';
+@import 'index.module';
+@import 'components/components';
+
+* {
+    font-weight: 700;
+    color: $font-color;
+}

@@ -1,0 +1,105 @@
+.album-cover {
+    grid-column-start: 8;
+    grid-column-end: 12;
+    grid-row-start: 1;
+    grid-row-end: 5;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    border: 5px inset grey;
+    background-color: rgb(202, 202, 202);
+    position: relative;
+}
+
+.eisbaer-logo{
+    grid-column-start: 1;
+    grid-column-end: 7;
+    grid-row-start: 2;
+    grid-row-end: 5;
+}
+
+.year {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.eisbaer-logo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.album-cover img {
+    object-fit: fill;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.right {
+    right: 10px;
+}
+
+.left {
+    left: 10px;
+}
+
+.album-cover p {
+    position: absolute;
+    bottom: 0;
+    font-size: 3em;
+    text-align: center;
+    background-color: rgba(79, 79, 79, 0.7);
+    width: 100%;
+}
+.spotify-now-playing {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: flex-end;
+}
+
+.progress-wrapper {
+    grid-column-start: 1;
+    grid-column-end: 12;
+    grid-row-start: 5;
+    grid-row-end: 8;
+    align-self: flex-end;
+}
+
+.progress-text {
+    position: absolute;
+    font-size: 1.4em;
+    min-width: 110px;
+}
+
+.progress-bar {
+    width: 102%;
+    height: 25px;
+    margin-left: -1%;
+}
+
+.progress {
+    position: relative;
+    height: 100%;
+    transition: width ease 1s;
+}
+
+.current-artist {
+    font-size: 3em;
+    font-weight: 100;
+    margin:0;
+}
+
+.current-song {
+    font-size: 5.5em;
+    font-weight: 900;
+    margin:0;
+}
+
+.progress {
+    background-color: red;
+}

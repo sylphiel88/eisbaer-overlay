@@ -1,0 +1,13 @@
+.topbar {
+    margin-left: 21vw;
+    line-height: 11vh;
+}
+
+.button-active {
+    background-color: darken($button-color, 20%);
+    cursor: initial !important;
+}
+
+.eisbaer-overlay-button {
+    cursor: pointer;
+}

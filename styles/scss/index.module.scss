@@ -1,0 +1,72 @@
+body {
+  background-color: $body-background;
+  font-family: "Bahnschrift";
+  color: $font-color;
+}
+
+.overlay-main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.side-bar-left {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  padding-left: 20px;
+  align-items: baseline;
+  justify-content: flex-start;
+  float: left;
+  width: 20%;
+  justify-content: center;
+}
+
+.side-bar-right {
+  position: absolute;
+  top: 10%;
+  right: 0;
+  height: 80%;
+  width: 5%;
+}
+
+.header {
+  width: 100%;
+  height: 10%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+}
+
+.content {
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 80%;
+  z-index: 2;
+}
+
+.eisbaer-overlay {
+  height: 98%;
+  aspect-ratio: 16/9;
+  border-radius: 20px;
+  box-shadow: 0 0 30px $border-color;
+  background-color: black;
+  padding: 20px;
+}
+
+.eisbaer-overlay-width {
+  width: 98%;
+  aspect-ratio: 16 / 9;
+}
+
+.eisbaer-overlay-height {
+  height: 98%;
+  aspect-ratio: 16 / 9;
+}

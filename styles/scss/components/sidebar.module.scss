@@ -1,0 +1,64 @@
+.spotify-login {
+    max-width: 100%;
+    min-width: 90%;
+    height: 20%;
+    margin: 10px;
+    border-radius: 10px;
+    border: 2px solid $button-color;
+    padding: 5px;
+}
+
+.eisbaer-overlay-button {
+    height: fit-content;
+    background-color: $button-color;
+    border: 1px inset grey;
+    box-shadow: 0 0 10px $button-color;;
+    padding: 15px;
+    border-radius: 100px;
+    width: fit-content;
+}
+
+.sidebar-section-list {
+    margin-top: 3%;
+    display: grid;
+    gap: 20px;
+}
+
+.sidebar-section-list-item {
+    position: relative;
+    list-style: none;
+    border: 1px inset $button-color;
+    background-color: rgba($button-color, 0.5);
+    box-shadow: 0 0 20px $button-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0 30px 0;
+    border-radius: 25px;
+}
+
+.sidebar-section-list-item::before {
+    background-color: $button-color;
+    border-radius: 100px;
+    border: 1px solid darken($button-color,20%);
+    box-shadow: 0 0 20px $button-color;
+    overflow: hidden;
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    content: attr(data-name);
+    height: fit-content;
+    width: fit-content;
+    padding: 2px 10px 2px 10px;
+}
+
+.youtube-link {
+    all: unset;
+    background-color: rgba(white,0.5);
+    border-radius: 15px;
+    line-height: 30px;
+    width: 90%;
+    margin-top: 10px;
+    padding: 2px 10px 2px 10px;
+}
