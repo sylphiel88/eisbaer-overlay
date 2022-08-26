@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ultra&display=swap");
 body {
   background-color: rgb(44, 44, 44);
-  font-family: "Bahnschrift";
+  font-family: "Bahnschrift" !important;
   color: rgb(213, 213, 213);
 }
 
@@ -233,12 +233,14 @@ body {
   font-size: 4em;
   font-weight: 100;
   margin: 0;
+  padding-left: 2%;
 }
 
 .current-song {
   font-size: 6.5em;
   font-weight: 900;
   margin: 0;
+  padding-left: 2%;
 }
 
 .progress {
