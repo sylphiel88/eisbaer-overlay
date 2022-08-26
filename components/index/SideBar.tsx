@@ -45,11 +45,13 @@ export default function SideBar(props: {
                 })
               }
               target="_blank"
+              rel="noreferrer"
             >
               Refresh Token holen
             </a>
           </button>
           <input
+            className="youtube-link"
             type={"password"}
             id="refresh_token"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +75,7 @@ export default function SideBar(props: {
             onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
               props.setYoutubeLink(
                 e.currentTarget.value.includes("?v=")
-                  ? e.currentTarget.value.split("=")[1]
+                  ? e.currentTarget.value.split("=")[1].split("&")[0]
                   : ""
               );
             }}

@@ -178,8 +178,14 @@ body {
   padding: 2px 10px 2px 10px;
 }
 
+.youtube-link ~ label {
+  margin-top: 15px;
+}
+
 .spotify-now-playing * {
   color: #fff;
+  pointer-events: none;
+  user-select: none;
 }
 
 .album-cover {
@@ -235,6 +241,7 @@ body {
   text-align: center;
   background-color: rgba(79, 79, 79, 0.7);
   width: 100%;
+  word-wrap: break-word;
 }
 
 .spotify-now-playing {
@@ -259,7 +266,7 @@ body {
 .progress-text {
   position: absolute;
   font-size: 3em;
-  min-width: 110px;
+  min-width: 250px;
   color: #fff;
 }
 
@@ -274,6 +281,8 @@ body {
   position: relative;
   height: 100%;
   transition: width ease 1s;
+  border-radius: 0 100px 100px 0;
+  box-shadow: 0 0 20px #e43121;
 }
 
 .current-artist {

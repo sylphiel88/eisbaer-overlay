@@ -1,5 +1,7 @@
 .spotify-now-playing * {
     color: #fff;
+    pointer-events: none;
+    user-select: none;
 }
 
 .album-cover {
@@ -55,6 +57,7 @@
     text-align: center;
     background-color: rgba(79, 79, 79, 0.7);
     width: 100%;
+    word-wrap: break-word;
 }
 .spotify-now-playing {
     height: 100%;
@@ -78,7 +81,7 @@
 .progress-text {
     position: absolute;
     font-size: 3em;
-    min-width: 110px;
+    min-width: 250px;
     color: #fff;
 }
 
@@ -93,6 +96,8 @@
     position: relative;
     height: 100%;
     transition: width ease 1s;
+    border-radius: 0 100px 100px 0;
+    box-shadow: 0 0 20px $progress-bar-color; 
 }
 
 .current-artist {
