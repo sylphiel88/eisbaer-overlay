@@ -6,6 +6,12 @@
 .button-active {
     background-color: darken($button-color, 20%);
     cursor: initial !important;
+    color: #fff;
+}
+
+.button-active-2 {
+    background-color: darken($button-color-2, 20%);
+    cursor: initial !important;
 }
 
 .eisbaer-overlay-button {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
@@ -6,6 +7,7 @@ import SlotMachine from "../components/index/SlotMachine";
 import SpotifyNowPlaying from "../components/index/SpotifyNowPlaying";
 import TopBar from "../components/index/TopBar";
 import YoutubeIFrame from "../components/index/YoutubeIFrame";
+import axiosInstance from "../models/axiosInstance";
 
 const Home: NextPage = () => {
   const [token, setToken] = useState("");
@@ -15,25 +17,18 @@ const Home: NextPage = () => {
   const [youtubeLink, setYoutubeLink] = useState<string>("");
   const [year, setYear] = useState<number>();
   const [numberOfTurns, setNumberOfTurns] = useState<number>(30);
+  const [refreshToken, setRefreshToken] = useState<string>("")
+
+  const axiosInst = axiosInstance;
 
   const views = ["Spotify", "Slotmachine", "Youtube"];
-
-  const values = Array.from(Array(new Date().getFullYear() - 1979).keys()).map(
-    (n) => n + 1980
-  );
-
-  const degrees = Array.from(Array(new Date().getFullYear() - 1979).keys()).map(
-    (y) => {
-      return ((y + 1) / 43) * 360;
-    }
-  );
 
   useEffect(() => {
     let newToken = window.localStorage.getItem("token");
     if (newToken) {
       setToken(newToken);
     }
-  },[]);
+  }, []);
 
   const useSpotifyHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUseSpotify(!useSpotify);
@@ -56,6 +51,10 @@ const Home: NextPage = () => {
   const slotMachineSetter = () => {
     setUseSlotMachine(!useSlotMachine);
   };
+
+  const refreshTokenSetter = (token:string) => {
+    setRefreshToken(token)
+  }
 
   return (
     <>
@@ -83,6 +82,7 @@ const Home: NextPage = () => {
             slotMachineYear={year ? year : 1000}
             numberOfTurns={numberOfTurns}
             setNumberOfTurns={setNumberOfTurns}
+            setRefreshToken={refreshTokenSetter}
           />
         </div>
         <div className="content">
@@ -92,6 +92,7 @@ const Home: NextPage = () => {
                 token={token}
                 useSpotify={useSpotify}
                 year={year && useSlotMachine ? year : 1000}
+                refreshToken={refreshToken}
               />
             )}
             {currView == 1 && (

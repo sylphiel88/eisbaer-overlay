@@ -21,7 +21,6 @@ export default function SlotMachine(props: {
   const [showResult, setShowResult] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(props.numberOfTurns);
     let tempTurns = Array.from(Array(Number(props.numberOfTurns)).keys());
     setTurns(tempTurns);
   }, [props.numberOfTurns]);
@@ -70,7 +69,7 @@ export default function SlotMachine(props: {
 
   useEffect(() => {
     setCurrTurns(currTurns + 1);
-  }, [top, currTurns]);
+  }, [top]);
 
   function makeSlot(values: number[], index: number) {
     return (
