@@ -41,7 +41,7 @@ export default function SideBar(props: {
                   client_id: process.env.SPOTIFY_CLIENT_ID,
                   scope: SCOPE,
                   redirect_uri: REDIRECT_URI,
-                  show_dialog: true
+                  show_dialog: true,
                 })
               }
               target="_blank"
@@ -69,17 +69,20 @@ export default function SideBar(props: {
           >
             Youtube anzeigen
           </button>
-          <input
-            className="youtube-link"
-            type={"text"}
-            onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
-              props.setYoutubeLink(
-                e.currentTarget.value.includes("?v=")
-                  ? e.currentTarget.value.split("=")[1].split("&")[0]
-                  : ""
-              );
-            }}
-          />
+          <div className="youtube-flex-wrapper">
+            <input
+              className="youtube-link"
+              type={"text"}
+              onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                props.setYoutubeLink(
+                  e.currentTarget.value.includes("?v=")
+                    ? e.currentTarget.value.split("=")[1]
+                    : ""
+                );
+              }}
+            />
+            <button className="youtube-accept-button">+</button>
+          </div>
         </div>
         <div className="sidebar-section-list-item-2" data-name="Slotmachine">
           <button
