@@ -94,7 +94,7 @@ export default function SpotifyNowPlaying(props: {
 
   return (
     <div className="spotify-now-playing">
-      {props.year >= 1980 && <div className="year">{props.year}</div>}
+      {props.year >= 1980 && <div className="year">{`Aktuelles Jahr : ${props.year}`}</div>}
       <div className="eisbaer-logo">
         <img src={eisbaerlogo.src} alt=""></img>
       </div>

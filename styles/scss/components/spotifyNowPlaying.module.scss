@@ -23,11 +23,26 @@
     grid-row-end: 5;
 }
 
+@function make3dEffect($color) {
+    $val: 0px 0px $color;
+    @for $i from 1 through 20 {
+      $color2: lighten($color, $i*0.6);
+      $val: #{$val}, #{-0.15*$i}px #{-0.15*$i}px #{$color2};
+    }
+    @return $val;
+  }
+  
+  @mixin longshadow($color) {
+    text-shadow: make3dEffect($color), 0 0 10px $color;
+  }
+  
 .year {
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
+    color: $slotmachine-color;
+    @include longshadow(lighten($slotmachine-color, 10%))
 }
 
 .eisbaer-logo img {
@@ -109,7 +124,8 @@
     padding-left: 2%;
     white-space: nowrap;
     overflow: hidden;
-    width: 82%;
+    width: 84%;
+    text-overflow: ellipsis;
 }
 
 .current-song {
@@ -119,7 +135,8 @@
     padding-left: 2%;
     white-space: nowrap;
     overflow: hidden;
-    width: 82%;
+    width: 84%;
+    text-overflow: ellipsis;
 }
 
 .progress {
@@ -141,4 +158,8 @@
 .spotify-logo-title {
     position: relative;
     top: 10px;
+}
+
+.year {
+    font-size: 2.5em;
 }

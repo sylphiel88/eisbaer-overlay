@@ -1,4 +1,3 @@
-import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
@@ -7,19 +6,18 @@ import SlotMachine from "../components/index/SlotMachine";
 import SpotifyNowPlaying from "../components/index/SpotifyNowPlaying";
 import TopBar from "../components/index/TopBar";
 import YoutubeIFrame from "../components/index/YoutubeIFrame";
-import axiosInstance from "../models/axiosInstance";
+
 
 const Home: NextPage = () => {
   const [token, setToken] = useState("");
   const [useSpotify, setUseSpotify] = useState<boolean>(false);
   const [useSlotMachine, setUseSlotMachine] = useState<boolean>(false);
   const [currView, setCurrView] = useState<number>(0);
-  const [youtubeLink, setYoutubeLink] = useState<string>("");
+  const [youtubeLinks, setYoutubeLinks] = useState<string[]>([]);
   const [year, setYear] = useState<number>();
   const [numberOfTurns, setNumberOfTurns] = useState<number>(30);
   const [refreshToken, setRefreshToken] = useState<string>("")
-
-  const axiosInst = axiosInstance;
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<string>("")
 
   const views = ["Spotify", "Slotmachine", "Youtube"];
 
@@ -30,9 +28,16 @@ const Home: NextPage = () => {
     }
   }, []);
 
+  useEffect(()=>{
+    if(currView!==2){
+      setCurrentlyPlaying("")
+    }
+  },[currView])
+
   const useSpotifyHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUseSpotify(!useSpotify);
   };
+
 
   function changeCurrView(num?: number) {
     if (num !== undefined) {
@@ -56,6 +61,14 @@ const Home: NextPage = () => {
     setRefreshToken(token)
   }
 
+  const addYoutubeLink = (link:string) => {
+    setYoutubeLinks([...youtubeLinks, link])
+  }
+
+  const removeVideo = (video:any) => {
+    setYoutubeLinks(youtubeLinks.filter(vid=>vid!==video))
+  }
+
   return (
     <>
       <Head>
@@ -75,7 +88,8 @@ const Home: NextPage = () => {
             setCurrView={changeCurrView}
             views={views}
             currView={currView}
-            setYoutubeLink={setYoutubeLink}
+            addYoutubeLink={addYoutubeLink}
+            youtubeLinks={youtubeLinks}
             spotifyRunning={useSpotify}
             useSlotMachine={useSlotMachine}
             slotMachineSetter={slotMachineSetter}
@@ -83,6 +97,8 @@ const Home: NextPage = () => {
             numberOfTurns={numberOfTurns}
             setNumberOfTurns={setNumberOfTurns}
             setRefreshToken={refreshTokenSetter}
+            removeVideo={removeVideo}
+            setCurrentlyPlaying={setCurrentlyPlaying}
           />
         </div>
         <div className="content">
@@ -103,7 +119,7 @@ const Home: NextPage = () => {
                 setCurrView={setCurrView}
               />
             )}
-            {currView == 2 && <YoutubeIFrame youtubeLink={youtubeLink} />}
+            {currView == 2 && <YoutubeIFrame youtubeLink={currentlyPlaying!=="" && currentlyPlaying!==undefined ? currentlyPlaying : ""} />}
           </div>
         </div>
         <div className="side-bar-right"></div>

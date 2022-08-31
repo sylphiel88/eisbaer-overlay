@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ultra&display=swap");
 body {
   background-color: rgb(44, 44, 44);
-  font-family: "Helvetica" !important;
+  font-family: "Bahnschrift" !important;
   color: rgb(0, 0, 0);
 }
 
@@ -82,24 +82,24 @@ body {
 
 .eisbaer-overlay-button {
   height: fit-content;
-  background-color: rgb(30, 215, 96);
-  border: 1px inset grey;
-  box-shadow: 0 0 10px rgb(30, 215, 96);
   padding: 15px;
   border-radius: 100px;
   width: fit-content;
   margin: 10px;
+  background-color: rgb(30, 215, 96);
+  border: 1px inset rgb(30, 215, 96);
+  box-shadow: 0 0 10px #127d38;
 }
 
 .eisbaer-overlay-button-2 {
   height: fit-content;
-  background-color: #e43121;
-  border: 1px inset grey;
-  box-shadow: 0 0 10px #e43121;
   padding: 15px;
   border-radius: 100px;
   width: fit-content;
   margin: 10px;
+  background-color: #e43121;
+  border: 1px inset #e43121;
+  box-shadow: 0 0 10px #8e1b11;
   color: #fff;
 }
 
@@ -114,20 +114,22 @@ body {
   list-style: none;
   border: 1px inset rgb(30, 215, 96);
   background-color: rgba(30, 215, 96, 0.5);
-  box-shadow: 0 0 20px rgb(30, 215, 96);
+  box-shadow: 0 0 20px #127d38;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 30px 0 30px 0;
   border-radius: 25px;
+  width: 100%;
+  max-width: 20vw;
 }
 
 .sidebar-section-list-item::before {
   background-color: rgb(30, 215, 96);
   border-radius: 100px;
   border: 1px solid #127d38;
-  box-shadow: 0 0 20px rgb(30, 215, 96);
+  box-shadow: 0 0 20px #127d38;
   overflow: hidden;
   position: absolute;
   top: -12px;
@@ -143,7 +145,7 @@ body {
   list-style: none;
   border: 1px inset #e43121;
   background-color: rgba(228, 49, 33, 0.5);
-  box-shadow: 0 0 20px #e43121;
+  box-shadow: 0 0 20px #8e1b11;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -151,13 +153,15 @@ body {
   padding: 30px 0 30px 0;
   border-radius: 25px;
   color: #fff;
+  width: 100%;
+  max-width: 20vw;
 }
 
 .sidebar-section-list-item-2::before {
   background-color: #e43121;
   border-radius: 100px;
   border: 1px solid #8e1b11;
-  box-shadow: 0 0 20px #e43121;
+  box-shadow: 0 0 20px #8e1b11;
   overflow: hidden;
   position: absolute;
   top: -12px;
@@ -174,12 +178,52 @@ body {
   border-radius: 15px;
   line-height: 30px;
   width: 90%;
-  margin-top: 10px;
   padding: 2px 10px 2px 10px;
 }
 
 .youtube-link ~ label {
   margin-top: 15px;
+}
+
+.youtube-flex-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  width: 90%;
+}
+
+.youtube-accept-button {
+  margin-left: 1em;
+  border-radius: 50%;
+  font-size: 1.2em;
+  height: 90%;
+  aspect-ratio: 1/1;
+  border: 1px solid #e43121;
+  box-shadow: 0 0 10px #bb2417;
+  background-color: #e43121;
+  color: #fff;
+}
+
+.youtube-link-video-list {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  line-height: 30px;
+  width: 90%;
+}
+
+.youtube-link-video-list div {
+  flex: 1;
+  width: 17vw;
+  line-height: 30px;
+  max-width: 18vw;
+}
+.youtube-link-video-list div div {
+  float: left;
+  max-width: 13vw;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .spotify-now-playing * {
@@ -209,9 +253,11 @@ body {
 
 .year {
   grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
+  color: #61341f;
+  text-shadow: 0px 0px #88492b, -0.15px -0.15px #8a4a2c, -0.3px -0.3px #8c4b2d, -0.45px -0.45px #8f4c2e, -0.6px -0.6px #914e2e, -0.75px -0.75px #934f2f, -0.9px -0.9px #965030, -1.05px -1.05px #985131, -1.2px -1.2px #9a5331, -1.35px -1.35px #9d5432, -1.5px -1.5px #9f5533, -1.65px -1.65px #a15634, -1.8px -1.8px #a35834, -1.95px -1.95px #a65935, -2.1px -2.1px #a85a36, -2.25px -2.25px #aa5b36, -2.4px -2.4px #ad5d37, -2.55px -2.55px #af5e38, -2.7px -2.7px #b15f39, -2.85px -2.85px #b46039, -3px -3px #b6623a, 0 0 10px #88492b;
 }
 
 .eisbaer-logo img {
@@ -294,7 +340,8 @@ body {
   padding-left: 2%;
   white-space: nowrap;
   overflow: hidden;
-  width: 82%;
+  width: 84%;
+  text-overflow: ellipsis;
 }
 
 .current-song {
@@ -304,7 +351,8 @@ body {
   padding-left: 2%;
   white-space: nowrap;
   overflow: hidden;
-  width: 82%;
+  width: 84%;
+  text-overflow: ellipsis;
 }
 
 .progress {
@@ -326,6 +374,10 @@ body {
 .spotify-logo-title {
   position: relative;
   top: 10px;
+}
+
+.year {
+  font-size: 2.5em;
 }
 
 .wheel {

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import querystring from "query-string";
+import axiosInstance from "../../models/axiosInstance";
+import { AxiosPromise } from "axios";
+import YouTubeInfo from "./YouTubeInfo";
 
 export default function SideBar(props: {
   useSpotifyHandler: React.MouseEventHandler<HTMLButtonElement>;
   setCurrView: Function;
   currView: number;
   views: string[];
-  setYoutubeLink: Function;
+  addYoutubeLink: Function;
+  youtubeLinks: string[];
   spotifyRunning: boolean;
   useSlotMachine: boolean;
   slotMachineSetter: Function;
@@ -14,10 +18,44 @@ export default function SideBar(props: {
   numberOfTurns: number;
   setNumberOfTurns: Function;
   setRefreshToken: Function;
+  setCurrentlyPlaying: Function;
+  removeVideo: Function;
 }) {
   const SCOPE = "user-read-currently-playing";
   const REDIRECT_URI =
     "http://localhost:3000/api/spotify/authorizationCodeCallback";
+
+  const [youtubeInfos, setYoutubeInfos] = useState<any[]>([]);
+
+  function makeVideo(video: any) {
+    return (
+      <YouTubeInfo
+        itemInfos={video !== undefined ? video : ""}
+        removeVideo={props.removeVideo}
+        setCurrentVideo={props.setCurrentlyPlaying}
+        currView={props.currView}
+        setCurrView={props.setCurrView}
+      />
+    );
+  }
+
+  useEffect(() => {
+    async function getYoutubeInfo(video: string) {
+      var result = await axiosInstance.get(
+        `http://localhost:3000/api/youtube/getYouTubeInfo?id=${video}`
+      );
+      var data = result.data;
+      return data;
+    }
+    var result:AxiosPromise[] = []
+    props.youtubeLinks.forEach((yl)=>{
+      result.push(getYoutubeInfo(yl))
+    })
+    Promise.all(result).then((res)=>{
+      setYoutubeInfos(res)
+    })
+  }, [props.youtubeLinks]);
+
   return (
     <>
       <div className="sidebar-section-list">
@@ -63,25 +101,31 @@ export default function SideBar(props: {
         <div className="sidebar-section-list-item-2" data-name="Youtube">
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-              props.setCurrView(2)
+              props.setCurrView(props.currView===2?0:2)
             }
             className="eisbaer-overlay-button-2"
           >
-            Youtube anzeigen
+            {`Youtube ${props.currView==2?'ausblenden':'einblenden'}`}
           </button>
           <div className="youtube-flex-wrapper">
-            <input
-              className="youtube-link"
-              type={"text"}
-              onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
-                props.setYoutubeLink(
-                  e.currentTarget.value.includes("?v=")
-                    ? e.currentTarget.value.split("=")[1]
-                    : ""
+            <input className="youtube-link" type={"text"} id="youtube-link" />
+            <button
+              className="youtube-accept-button"
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                var input = document.getElementById(
+                  "youtube-link"
+                ) as HTMLInputElement;
+                props.addYoutubeLink(
+                  input.value.includes("?v=") ? input.value.split("=")[1] : ""
                 );
+                input.value="";
               }}
-            />
-            <button className="youtube-accept-button">+</button>
+            >
+              +
+            </button>
+          </div>
+          <div className="youtube-link-video-list">
+            {youtubeInfos.map((video) => makeVideo(video))}
           </div>
         </div>
         <div className="sidebar-section-list-item-2" data-name="Slotmachine">

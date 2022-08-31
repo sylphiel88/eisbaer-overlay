@@ -1,3 +1,13 @@
+@import '../variables.scss';
+
+@mixin eisbaer-overlay-button-layout {
+    height: fit-content;
+    padding: 15px;
+    border-radius: 100px;
+    width: fit-content;
+    margin: 10px;
+}
+
 .spotify-login {
     max-width: 100%;
     min-width: 90%;
@@ -9,26 +19,18 @@
 }
 
 .eisbaer-overlay-button {
-    height: fit-content;
+    @include eisbaer-overlay-button-layout();
     background-color: $button-color;
-    border: 1px inset grey;
-    box-shadow: 0 0 10px $button-color;
-    padding: 15px;
-    border-radius: 100px;
-    width: fit-content;
-    margin: 10px;
+    border: 1px inset $button-color;
+    box-shadow: 0 0 10px darken($button-color,20%);
 }
 
 
 .eisbaer-overlay-button-2 {
-    height: fit-content;
+    @include eisbaer-overlay-button-layout();
     background-color: $button-color-2;
-    border: 1px inset grey;
-    box-shadow: 0 0 10px $button-color-2;
-    padding: 15px;
-    border-radius: 100px;
-    width: fit-content;
-    margin: 10px;
+    border: 1px inset $button-color-2;
+    box-shadow: 0 0 10px darken($button-color-2,20%);
     color: #fff;
 }
 
@@ -43,20 +45,22 @@
     list-style: none;
     border: 1px inset $button-color;
     background-color: rgba($button-color, 0.5);
-    box-shadow: 0 0 20px $button-color;
+    box-shadow: 0 0 20px darken($button-color,20%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 30px 0 30px 0;
     border-radius: 25px;
+    width: 100%;
+    max-width: 20vw;
 }
 
 .sidebar-section-list-item::before {
     background-color: $button-color;
     border-radius: 100px;
     border: 1px solid darken($button-color,20%);
-    box-shadow: 0 0 20px $button-color;
+    box-shadow: 0 0 20px darken($button-color,20%);
     overflow: hidden;
     position: absolute;
     top: -12px;
@@ -72,7 +76,7 @@
     list-style: none;
     border: 1px inset $button-color-2;
     background-color: rgba($button-color-2, 0.5);
-    box-shadow: 0 0 20px $button-color-2;
+    box-shadow: 0 0 20px darken($button-color-2,20%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,13 +84,15 @@
     padding: 30px 0 30px 0;
     border-radius: 25px;
     color: #fff;
+    width: 100%;
+    max-width: 20vw;
 }
 
 .sidebar-section-list-item-2::before {
     background-color: $button-color-2;
     border-radius: 100px;
     border: 1px solid darken($button-color-2,20%);
-    box-shadow: 0 0 20px $button-color-2;
+    box-shadow: 0 0 20px darken($button-color-2,20%);
     overflow: hidden;
     position: absolute;
     top: -12px;
@@ -103,10 +109,50 @@
     border-radius: 15px;
     line-height: 30px;
     width: 90%;
-    margin-top: 10px;
     padding: 2px 10px 2px 10px;
 }
 
 .youtube-link ~ label {
     margin-top: 15px;
+}
+
+.youtube-flex-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    width: 90%;
+}
+
+.youtube-accept-button {
+    margin-left: 1em;
+    border-radius: 50%;
+    font-size: 1.2em;
+    height: 90%;
+    aspect-ratio: 1/1;
+    border: 1px solid $button-color-2;
+    box-shadow: 0 0 10px darken($button-color-2, 10%);
+    background-color: $button-color-2;
+    color: #fff;
+}
+
+.youtube-link-video-list{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+    width: 90%;
+}
+
+.youtube-link-video-list div{
+    flex: 1;
+    width: 17vw;
+    line-height: 30px;
+    max-width: 18vw;
+    div{
+        float: left;
+        max-width: 13vw;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 }

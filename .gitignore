@@ -39,3 +39,5 @@ next-env.d.ts
 dockerfile
 docker-compose.yml
 overlay.tar
+styles/style.css
+styles/style.css.map
