@@ -3,9 +3,10 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/index/SideBar";
 import SlotMachine from "../components/index/SlotMachine";
-import SpotifyNowPlaying from "../components/index/SpotifyNowPlaying";
 import TopBar from "../components/index/TopBar";
 import YoutubeIFrame from "../components/index/YoutubeIFrame";
+import axiosInstance from "../models/axiosInstance";
+import NowPlaying from "../components/index/NowPlaying";
 
 
 const Home: NextPage = () => {
@@ -18,8 +19,10 @@ const Home: NextPage = () => {
   const [numberOfTurns, setNumberOfTurns] = useState<number>(30);
   const [refreshToken, setRefreshToken] = useState<string>("")
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string>("")
+  const [useVirtualDJ, setUseVirtualDJ] = useState<boolean>(false)
+  const [virtualDJData, setVirtualDJData] = useState<any>()
 
-  const views = ["Spotify", "Slotmachine", "Youtube"];
+  const views = ["Now Playing", "Slotmachine", "Youtube"];
 
   useEffect(() => {
     let newToken = window.localStorage.getItem("token");
@@ -27,6 +30,14 @@ const Home: NextPage = () => {
       setToken(newToken);
     }
   }, []);
+
+  useEffect(()=>{
+    if(useVirtualDJ!==undefined && useVirtualDJ){
+      axiosInstance.get('http://localhost:5000/getCurrentSong').then((res)=>{
+        setVirtualDJData(res.data)
+      })
+    }
+  })
 
   useEffect(()=>{
     if(currView!==2){
@@ -99,16 +110,20 @@ const Home: NextPage = () => {
             setRefreshToken={refreshTokenSetter}
             removeVideo={removeVideo}
             setCurrentlyPlaying={setCurrentlyPlaying}
+            useVirtualDJ={useVirtualDJ}
+            setUseVirtualDj={setUseVirtualDJ}
           />
         </div>
         <div className="content">
           <div className="eisbaer-overlay">
             {currView == 0 && (
-              <SpotifyNowPlaying
+              <NowPlaying
                 token={token}
                 useSpotify={useSpotify}
                 year={year && useSlotMachine ? year : 1000}
                 refreshToken={refreshToken}
+                useVirtualDj={useVirtualDJ}
+                virtualDJData={virtualDJData}
               />
             )}
             {currView == 1 && (

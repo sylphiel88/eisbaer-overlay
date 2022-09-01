@@ -226,6 +226,10 @@ body {
   overflow: hidden;
 }
 
+.vdj-sidebar-section {
+  flex-direction: row !important;
+}
+
 .spotify-now-playing * {
   color: #fff;
   pointer-events: none;
@@ -362,7 +366,7 @@ body {
 .spotify-logo-wrapper {
   position: relative;
   top: -127px;
-  right: 100px;
+  right: 120px;
   float: right;
 }
 

@@ -20,6 +20,8 @@ export default function SideBar(props: {
   setRefreshToken: Function;
   setCurrentlyPlaying: Function;
   removeVideo: Function;
+  useVirtualDJ:boolean;
+  setUseVirtualDj:Function;
 }) {
   const SCOPE = "user-read-currently-playing";
   const REDIRECT_URI =
@@ -158,6 +160,11 @@ export default function SideBar(props: {
               <span>{`~ ${props.numberOfTurns / 2}s`}</span>
             </>
           )}
+        </div>
+        <div className="sidebar-section-list-item-2 vdj-sidebar-section" data-name="Virtual Dj">
+          <input type={'checkbox'} defaultChecked={props.useVirtualDJ} onChange={(event:React.ChangeEvent<HTMLInputElement>)=>{
+            props.setUseVirtualDj(!props.useVirtualDJ)}} id="virtual-dj-check" className="virtual-dj-check"/>
+            Virtual DJ benutzen
         </div>
       </div>
     </>
