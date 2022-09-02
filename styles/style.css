@@ -2,7 +2,7 @@
 body {
   background-color: rgb(44, 44, 44);
   font-family: "Bahnschrift" !important;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 .overlay-main {
@@ -58,6 +58,7 @@ body {
   box-shadow: 0 0 30px rgb(114, 114, 114);
   background-color: black;
   padding: 20px;
+  overflow: hidden;
 }
 
 .eisbaer-overlay-width {
@@ -228,6 +229,10 @@ body {
 
 .vdj-sidebar-section {
   flex-direction: row !important;
+}
+
+.spotify-section * {
+  color: #000 !important;
 }
 
 .spotify-now-playing * {
@@ -876,9 +881,40 @@ body {
     opacity: 0;
   }
 }
+.playlist-date-picker {
+  background-color: grey;
+}
+
+.playlist-wrapper {
+  overflow: scroll;
+  height: 68vh;
+  max-height: 68vh;
+  width: fit-content;
+  padding: 1em;
+  border-radius: 10px;
+  background-color: rgba(114, 114, 114, 0.5);
+  border: 2px inset rgb(114, 114, 114);
+  box-shadow: 0 0 20px #3f3f3f;
+}
+
+.playlist-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.view-playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1em;
+}
+
+.playlist-header {
+  font-size: 2em;
+}
+
 * {
   font-weight: 700;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,9 +7,11 @@ import TopBar from "../components/index/TopBar";
 import YoutubeIFrame from "../components/index/YoutubeIFrame";
 import axiosInstance from "../models/axiosInstance";
 import NowPlaying from "../components/index/NowPlaying";
+import PlayListViewer from "../components/index/PlayListViewer";
+import DjListTool from "../components/index/DjListTool";
 
 
-const Home: NextPage = () => {
+const Home: NextPage<{recordSongs: boolean}> = ({recordSongs}) => {
   const [token, setToken] = useState("");
   const [useSpotify, setUseSpotify] = useState<boolean>(false);
   const [useSlotMachine, setUseSlotMachine] = useState<boolean>(false);
@@ -22,7 +24,7 @@ const Home: NextPage = () => {
   const [useVirtualDJ, setUseVirtualDJ] = useState<boolean>(false)
   const [virtualDJData, setVirtualDJData] = useState<any>()
 
-  const views = ["Now Playing", "Slotmachine", "Youtube"];
+  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan"];
 
   useEffect(() => {
     let newToken = window.localStorage.getItem("token");
@@ -124,6 +126,7 @@ const Home: NextPage = () => {
                 refreshToken={refreshToken}
                 useVirtualDj={useVirtualDJ}
                 virtualDJData={virtualDJData}
+                record = {recordSongs}
               />
             )}
             {currView == 1 && (
@@ -135,6 +138,8 @@ const Home: NextPage = () => {
               />
             )}
             {currView == 2 && <YoutubeIFrame youtubeLink={currentlyPlaying!=="" && currentlyPlaying!==undefined ? currentlyPlaying : ""} />}
+            {currView == 3 && <PlayListViewer />}
+            {currView == 4 && <DjListTool/>}
           </div>
         </div>
         <div className="side-bar-right"></div>
@@ -143,5 +148,10 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+Home.getInitialProps = async() => {
+  const recordSongs = process.env.RECORD_SONGS === "1"
+  return { recordSongs: recordSongs }
+}
 
 export default Home;

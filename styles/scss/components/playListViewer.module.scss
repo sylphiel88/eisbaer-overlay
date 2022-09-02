@@ -1,0 +1,30 @@
+.playlist-date-picker {
+    background-color: grey;
+}
+.playlist-wrapper {
+    overflow: scroll;
+    height: 68vh;
+    max-height: 68vh;
+    width: fit-content;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: rgba($border-color, 0.5);
+    border: 2px inset $border-color;
+    box-shadow: 0 0 20px darken($border-color,20%);
+
+}
+
+.playlist-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.view-playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1em;
+}
+
+.playlist-header {
+    font-size: 2em;
+}

@@ -3,16 +3,18 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import eisbaerlogo from "../../assets/images/eisbaerlogo.png";
 import spotifylogo from "../../assets/images/Spotify_Logo.png";
-import virtuallogo from "../../assets/images/vdj.png"
-import platte from "../../assets/images/platte.png"
+import virtuallogo from "../../assets/images/vdj.png";
+import platte from "../../assets/images/platte.png";
+import axiosInstance from "../../models/axiosInstance";
 
 export default function SpotifyNowPlaying(props: {
   token: string | undefined;
   useSpotify: boolean;
   year: number;
   refreshToken: string;
-  useVirtualDj:boolean;
-  virtualDJData:any;
+  useVirtualDj: boolean;
+  virtualDJData: any;
+  record: boolean;
 }) {
   const [response, setResponse] = useState<any>();
   const [duration, setDuration] = useState<number>(0);
@@ -23,6 +25,11 @@ export default function SpotifyNowPlaying(props: {
   const [width, setWidth] = useState<number>(0);
   const [refreshSpotify, setRefreshSpotify] = useState<number>(0);
 
+  useEffect(()=>{
+    console.log('====================================');
+    console.log(props.record);
+    console.log('====================================');
+  },[props.record])
 
   useEffect(() => {
     if (props.useSpotify && !props.useVirtualDj) {
@@ -51,6 +58,15 @@ export default function SpotifyNowPlaying(props: {
   }, [props.useSpotify, props.useVirtualDj]);
 
   useEffect(() => {
+    if (props.record) {
+      axiosInstance.put("http://localhost:5000/putCurrentSong", {
+        artist: artist,
+        song: title,
+      });
+    }
+  }, [artist, title]);
+
+  useEffect(() => {
     if (props.useSpotify === true) {
       getCurrentTitle(undefined);
     } else {
@@ -58,12 +74,12 @@ export default function SpotifyNowPlaying(props: {
     }
   }, [props.useSpotify, refreshSpotify]);
 
-  useEffect(()=>{
-    if(props.useVirtualDj && props.virtualDJData!==undefined){
-      setArtist(props.virtualDJData["artist"])
-      setTitle(props.virtualDJData["song"])
+  useEffect(() => {
+    if (props.useVirtualDj && props.virtualDJData !== undefined) {
+      setArtist(props.virtualDJData["artist"]);
+      setTitle(props.virtualDJData["song"]);
     }
-  },[props.useVirtualDj, props.virtualDJData])
+  }, [props.useVirtualDj, props.virtualDJData]);
 
   useEffect(() => {
     setWidth((currPos / duration) * 100);
@@ -105,12 +121,21 @@ export default function SpotifyNowPlaying(props: {
 
   return (
     <div className="spotify-now-playing">
-      {props.year >= 1980 && <div className="year">{`Aktuelles Jahr : ${props.year}`}</div>}
+      {props.year >= 1980 && (
+        <div className="year">{`Aktuelles Jahr : ${props.year}`}</div>
+      )}
       <div className="eisbaer-logo">
         <img src={eisbaerlogo.src} alt=""></img>
       </div>
       <div className="album-cover">
-        <img src={!props.useVirtualDj ? response?.item?.album?.images[0].url : platte.src} alt="" />
+        <img
+          src={
+            !props.useVirtualDj
+              ? response?.item?.album?.images[0].url
+              : platte.src
+          }
+          alt=""
+        />
         <p>{albumTitle}</p>
       </div>
       <div className="progress-wrapper">
@@ -118,17 +143,22 @@ export default function SpotifyNowPlaying(props: {
         <div className="current-song">{title}</div>
         <div className="spotify-logo-wrapper">
           <p className="spotify-logo-title">Powered By</p>
-          <img src={!props.useVirtualDj ? spotifylogo.src : virtuallogo.src} className="spotify-logo" />
+          <img
+            src={!props.useVirtualDj ? spotifylogo.src : virtuallogo.src}
+            className="spotify-logo"
+          />
         </div>
 
-        {!props.useVirtualDj && <div className="progress-bar">
-          <div className="progress" style={{ width: `${width}%` }}>
-            <div className={`progress-text ${width < 10 ? "left" : "right"}`}>
-              {" "}
-              {`${formatTime(currPos)} / ${formatTime(duration)}`}
+        {!props.useVirtualDj && (
+          <div className="progress-bar">
+            <div className="progress" style={{ width: `${width}%` }}>
+              <div className={`progress-text ${width < 10 ? "left" : "right"}`}>
+                {" "}
+                {`${formatTime(currPos)} / ${formatTime(duration)}`}
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </div>
     </div>
   );
