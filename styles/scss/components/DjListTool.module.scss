@@ -1,0 +1,96 @@
+.dj-tool-sidebar-wrapper {
+  height: 95%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  .dj-list-sidebar-item-not-active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 33%;
+    background-color: $dj-tool-color-not-active;
+    border-radius: 20px 0 0 20px;
+    border-bottom: 3px inset darken($dj-tool-color-not-active, 20%);
+    border-left: 3px inset darken($dj-tool-color-not-active, 20%);
+    border-top: 3px inset darken($dj-tool-color-not-active, 20%);
+    border-right: 3px inset darken($dj-tool-color-not-active, 20%);
+    box-shadow: 0 0 20px $dj-tool-color-not-active;
+  }
+  .dj-list-sidebar-item-active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 33%;
+    background-color: $dj-tool-color-active;
+    border-radius: 20px 0 0 20px;
+    border-bottom: 3px inset darken($dj-tool-color-active, 20%);
+    border-left: 3px inset darken($dj-tool-color-active, 20%);
+    border-top: 3px inset darken($dj-tool-color-active, 20%);
+    box-shadow: 0 0 20px $dj-tool-color-active;
+  }
+}
+
+.dj-list-content {
+  display: block;
+  float: left;
+  height: 95%;
+  width: 80%;
+  background-color: $dj-tool-color-active;
+  border-bottom: 3px inset darken($dj-tool-color-active, 20%);
+  border-top: 3px inset darken($dj-tool-color-active, 20%);
+  border-right: 3px inset darken($dj-tool-color-active, 20%);
+  box-shadow: 0 0 20px $dj-tool-color-active;
+  padding: 15px;
+  border-radius: 0 20px 20px 0;
+}
+
+.dj-tool {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.dj-list-dj-tool-section {
+  float: left;
+  position: relative;
+  list-style: none;
+  border: 1px inset $dj-tool-color-active;
+  background-color: rgba($dj-tool-color-active, 0.5);
+  box-shadow: 0 0 20px darken($dj-tool-color-active, 20%);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0 30px 0;
+  border-radius: 25px;
+  color: #fff;
+  width:46%;
+  height: 100%;
+  margin-left: 2%;
+  padding: 25px;
+}
+
+.dj-list-dj-tool-section::before {
+  background-color: $dj-tool-color-active;
+  border-radius: 100px;
+  border: 1px solid darken($dj-tool-color-active, 20%);
+  box-shadow: 0 0 20px darken($dj-tool-color-active, 20%);
+  overflow: hidden;
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  content: attr(data-name);
+  height: fit-content;
+  width: fit-content;
+  padding: 2px 10px 2px 10px;
+}
+
+.eisbaer-overlay-button-3 {
+    @include eisbaer-overlay-button-layout();
+    background-color: $dj-tool-color-active;
+    border: 1px inset $dj-tool-color-active;
+    box-shadow: 0 0 10px darken($dj-tool-color-active,20%);
+    color: #fff;
+}

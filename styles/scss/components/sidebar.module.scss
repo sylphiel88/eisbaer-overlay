@@ -161,6 +161,21 @@
     flex-direction: row !important;
 }
 
-.spotify-section * {
-    color: #000 !important;
+
+.icon-section {
+    padding: 3px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -1.9em;
+    width: 20%;
+    left: 9.1em;
+    border-radius: 10px 25px 10px 25px;
+    border: 1px outset rgba(#fff, 50%);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 10px darken(rgba(#fff, 50%), 15%);
+    color: #fff !important;
 }

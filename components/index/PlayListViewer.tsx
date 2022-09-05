@@ -14,8 +14,7 @@ export default function PlayListViewer(){
     const [lastDate, setLastDate] = useState<string>()
 
     useEffect(()=>{
-        axiosInstance.get('http://localhost:5000/getLastDateWithEntrys').then((res)=>{
-            console.log(res.data)
+        axiosInstance.get('http://localhost:5000/getLastDateWithEntrys').then((res)=>{  
             setLastDate(res.data["lastDate"])
         })
     },[])

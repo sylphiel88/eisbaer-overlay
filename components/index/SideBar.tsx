@@ -3,6 +3,7 @@ import querystring from "query-string";
 import axiosInstance from "../../models/axiosInstance";
 import { AxiosPromise } from "axios";
 import YouTubeInfo from "./YouTubeInfo";
+import SideBarSection from "./SideBarSection";
 
 export default function SideBar(props: {
   useSpotifyHandler: React.MouseEventHandler<HTMLButtonElement>;
@@ -20,8 +21,11 @@ export default function SideBar(props: {
   setRefreshToken: Function;
   setCurrentlyPlaying: Function;
   removeVideo: Function;
-  useVirtualDJ:boolean;
-  setUseVirtualDj:Function;
+  useVirtualDJ: boolean;
+  setUseVirtualDj: Function;
+  clientSecret: string;
+  clientId: string;
+  refreshToken: string;
 }) {
   const SCOPE = "user-read-currently-playing";
   const REDIRECT_URI =
@@ -49,19 +53,19 @@ export default function SideBar(props: {
       var data = result.data;
       return data;
     }
-    var result:AxiosPromise[] = []
-    props.youtubeLinks.forEach((yl)=>{
-      result.push(getYoutubeInfo(yl))
-    })
-    Promise.all(result).then((res)=>{
-      setYoutubeInfos(res)
-    })
+    var result: AxiosPromise[] = [];
+    props.youtubeLinks.forEach((yl) => {
+      result.push(getYoutubeInfo(yl));
+    });
+    Promise.all(result).then((res) => {
+      setYoutubeInfos(res);
+    });
   }, [props.youtubeLinks]);
 
   return (
     <>
       <div className="sidebar-section-list">
-        <div className="sidebar-section-list-item spotify-section" data-name="Spotify">
+        <SideBarSection sectionClass=" spotify-section" sectionTitle="Sportify">
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
               props.useSpotifyHandler(e)
@@ -78,7 +82,7 @@ export default function SideBar(props: {
                 "https://accounts.spotify.com/authorize?" +
                 querystring.stringify({
                   response_type: "code",
-                  client_id: process.env.SPOTIFY_CLIENT_ID,
+                  client_id: props.clientId,
                   scope: SCOPE,
                   redirect_uri: REDIRECT_URI,
                   show_dialog: true,
@@ -97,17 +101,18 @@ export default function SideBar(props: {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               props.setRefreshToken(e.currentTarget.value);
             }}
+            defaultValue={props.refreshToken}
           ></input>
           <label htmlFor="refreshToken">Hier Refresh Token eingeben.</label>
-        </div>
-        <div className="sidebar-section-list-item-2" data-name="Youtube">
+        </SideBarSection>
+        <SideBarSection sectionClass="-2" sectionTitle="Youtube">
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-              props.setCurrView(props.currView===2?0:2)
+              props.setCurrView(props.currView === 2 ? 0 : 2)
             }
             className="eisbaer-overlay-button-2"
           >
-            {`Youtube ${props.currView==2?'ausblenden':'einblenden'}`}
+            {`Youtube ${props.currView == 2 ? "ausblenden" : "einblenden"}`}
           </button>
           <div className="youtube-flex-wrapper">
             <input className="youtube-link" type={"text"} id="youtube-link" />
@@ -120,7 +125,7 @@ export default function SideBar(props: {
                 props.addYoutubeLink(
                   input.value.includes("?v=") ? input.value.split("=")[1] : ""
                 );
-                input.value="";
+                input.value = "";
               }}
             >
               +
@@ -129,8 +134,8 @@ export default function SideBar(props: {
           <div className="youtube-link-video-list">
             {youtubeInfos.map((video) => makeVideo(video))}
           </div>
-        </div>
-        <div className="sidebar-section-list-item-2" data-name="Slotmachine">
+        </SideBarSection>
+        <SideBarSection sectionClass="-2" sectionTitle="Slotmachine">
           <button
             className="eisbaer-overlay-button-2"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -160,12 +165,21 @@ export default function SideBar(props: {
               <span>{`~ ${props.numberOfTurns / 2}s`}</span>
             </>
           )}
-        </div>
-        <div className="sidebar-section-list-item-2 vdj-sidebar-section" data-name="Virtual Dj">
-          <input type={'checkbox'} defaultChecked={props.useVirtualDJ} onChange={(event:React.ChangeEvent<HTMLInputElement>)=>{
-            props.setUseVirtualDj(!props.useVirtualDJ)}} id="virtual-dj-check" className="virtual-dj-check"/>
-            Virtual DJ benutzen
-        </div>
+        </SideBarSection>
+        <SideBarSection sectionClass="-2" sectionTitle="Virtual Dj">
+          <div className="vdj-sidebar-section">
+            <input
+              type={"checkbox"}
+              defaultChecked={props.useVirtualDJ}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.setUseVirtualDj(!props.useVirtualDJ);
+              }}
+              id="virtual-dj-check"
+              className="virtual-dj-check"
+            />
+            Virtual DJ benutzen 
+          </div>
+        </SideBarSection>
       </div>
     </>
   );

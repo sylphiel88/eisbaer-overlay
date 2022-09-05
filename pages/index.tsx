@@ -8,10 +8,10 @@ import YoutubeIFrame from "../components/index/YoutubeIFrame";
 import axiosInstance from "../models/axiosInstance";
 import NowPlaying from "../components/index/NowPlaying";
 import PlayListViewer from "../components/index/PlayListViewer";
-import DjListTool from "../components/index/DjListTool";
+import DjListTool from "../components/index/DjListTool/DjListTool";
 
 
-const Home: NextPage<{recordSongs: boolean}> = ({recordSongs}) => {
+const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
   const [token, setToken] = useState("");
   const [useSpotify, setUseSpotify] = useState<boolean>(false);
   const [useSlotMachine, setUseSlotMachine] = useState<boolean>(false);
@@ -114,6 +114,9 @@ const Home: NextPage<{recordSongs: boolean}> = ({recordSongs}) => {
             setCurrentlyPlaying={setCurrentlyPlaying}
             useVirtualDJ={useVirtualDJ}
             setUseVirtualDj={setUseVirtualDJ}
+            clientId={client_id}
+            clientSecret={client_secret}
+            refreshToken={refreshToken}
           />
         </div>
         <div className="content">
@@ -149,9 +152,11 @@ const Home: NextPage<{recordSongs: boolean}> = ({recordSongs}) => {
   );
 };
 
-Home.getInitialProps = async() => {
+Home.getInitialProps = async(ctx) => {
   const recordSongs = process.env.RECORD_SONGS === "1"
-  return { recordSongs: recordSongs }
+  const client_id = process.env.SPOTIFY_CLIENT_ID
+  const client_secret = process.env.SPOTIFY_CLIENT_SECRET
+  return { recordSongs: recordSongs, client_id: client_id, client_secret: client_secret }
 }
 
 export default Home;

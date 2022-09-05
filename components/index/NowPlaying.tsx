@@ -25,11 +25,6 @@ export default function SpotifyNowPlaying(props: {
   const [width, setWidth] = useState<number>(0);
   const [refreshSpotify, setRefreshSpotify] = useState<number>(0);
 
-  useEffect(()=>{
-    console.log('====================================');
-    console.log(props.record);
-    console.log('====================================');
-  },[props.record])
 
   useEffect(() => {
     if (props.useSpotify && !props.useVirtualDj) {
