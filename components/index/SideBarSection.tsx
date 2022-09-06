@@ -16,7 +16,7 @@ export default function SideBarSection({children, sectionTitle, sectionClass}:Si
                 <div className="icon-section" onClick={(event:React.MouseEvent<HTMLDivElement>)=>{setOpen(!sectionOpen)}}>
                 {sectionOpen ? <BsFillArrowUpCircleFill/> : <BsFillArrowDownCircleFill/>}
                 </div>
-                {sectionOpen ? children : <div>{`Klicken um ${sectionTitle  } zu öffnen`}<BsArrowUpRight style={{position: "relative", top:"-10px", left:"10px"}}/></div>}
+                {sectionOpen ? children : <div>{`Klicken um ${sectionTitle  } zu öffnen`}</div>}
             </div>
     )
 }

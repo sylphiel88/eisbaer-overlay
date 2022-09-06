@@ -3,9 +3,15 @@ import DjListDjListTool from "./DjListDjListTool";
 import DjListDjTool from "./DjListDjTool";
 import DjListEventTool from "./DjListEventTool";
 import DjListItem from "./DjListItem";
+import DjListPreviewTool from "./DjListPreviewTool";
 
 export default function DjListTool() {
-  const menuItems = ["DJs", "Veranstaltungen", "DJ-Plan"];
+  const menuItems = [
+    "aktuellen DJ-Plan erstellen",
+    "DJs",
+    "Veranstaltungen",
+    "Vorschau Monatsplan",
+  ];
   const [activeItem, setActiveItem] = useState<number>(0);
 
   function makeItems(item: string, index: number) {
@@ -28,9 +34,10 @@ export default function DjListTool() {
           })}
         </div>
         <div className="dj-list-content">
-          {activeItem===0 && <DjListDjTool/>}
-          {activeItem===1 && <DjListEventTool/>}
-          {activeItem===2 && <DjListDjListTool/>}
+          {activeItem === 0 && <DjListDjListTool />}
+          {activeItem === 1 && <DjListDjTool />}
+          {activeItem === 2 && <DjListEventTool />}
+          {activeItem === 3 && <DjListPreviewTool />}
         </div>
       </div>
     </>

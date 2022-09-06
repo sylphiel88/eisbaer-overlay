@@ -94,3 +94,105 @@
     box-shadow: 0 0 10px darken($dj-tool-color-active,20%);
     color: #fff;
 }
+
+.remove-dj-list {
+  margin-left: 1em;
+}
+
+.one-dj-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.dj-list-tool-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 95%;
+  min-height: 95%;
+  gap: 0.75em;
+}
+
+.dj-list-tool-table > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: darken($dj-tool-color-active, 20%);
+  border-radius: 25px;
+  border: 1px outset lighten($dj-tool-color-active, 20%);
+  box-shadow: 0 0 10px darken($dj-tool-color-active, 20%);
+}
+
+.dj-list-tool-table > * select, .dj-list-tool-table > * button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: darken($dj-tool-color-active, 20%);
+  border-radius: 25px;
+  border: 1px outset lighten($dj-tool-color-active, 20%);
+  box-shadow: 0 0 10px darken($dj-tool-color-active, 20%);
+}
+
+.dj-selector * {
+  all: unset;
+  border: rgba($dj-tool-color-active, 0.5);
+}
+
+.dj-selector {
+  border-radius: 0;
+  height: max-content;
+  margin: 5px;
+}
+
+.dj-overlays-wrapper {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:0;
+  left:0;
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+  transition: backdrop-filter 2s;
+  margin: 15px;
+}
+
+.dj-overlay {
+  float: left;
+  min-width: 20vw;
+  width: 20vw;
+  height: 33vh;
+  pointer-events:all;
+  background-color: darken($dj-tool-color-active, 15%);
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px outset $dj-tool-color-active;
+  box-shadow: 0 0 10px lighten($dj-tool-color-active, 2%);
+}
+
+.dj-list-new-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.dj-list-new-date > * {
+  margin: 5px;
+  color: #000;
+}
+
+.dj-list-tool-table > * {
+  min-height: 58px;
+}
+
+.dj-list-content {
+  overflow-y: scroll;
+}
+
+.dj-list-content::-webkit-scrollbar {
+  display: none;
+}

@@ -8,7 +8,6 @@ interface DjListItem {
 }
 
 export default function DjListItem({ isActive, title, index, setActiveItem }: DjListItem) {
-
   const setNewActive = useCallback(()=>{setActiveItem(index)},[])
 
   return (
