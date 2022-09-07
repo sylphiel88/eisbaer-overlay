@@ -58,7 +58,6 @@ export default function DjListEventTool() {
   };
 
   const createEvent = () => {
-    console.log(newEvent, newCatchphrase);
     
     if (newEvent!== undefined && newCatchphrase!==undefined) {
       axiosInstance

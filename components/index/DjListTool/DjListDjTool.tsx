@@ -7,15 +7,14 @@ export default function DjListDjTool() {
   const [newDj, setNewDj] = useState<string>();
 
   const setNewDjCallback = useCallback(
-    async(event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(event.currentTarget.value);
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       setNewDj(event.currentTarget.value);
     },
     []
   );
   const createDjCallback = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      createDj(newDj);  
+      createDj(newDj);
     },
     [newDj]
   );
@@ -35,16 +34,18 @@ export default function DjListDjTool() {
   const makeDj = (dj: any) => {
     return (
       <>
-        <div className="one-dj-wrapper">
-          <div>{dj.name}</div>
-          <div
-            id={dj.name}
-            className="remove-dj-list"
-            onClick={deleteDJCallback}
-          >
-            <RiDeleteBin2Fill />
+        {dj.name!=="" && 
+          <div className="one-dj-wrapper">
+            <div>{dj.name}</div>
+            <div
+              id={dj.name}
+              className="remove-dj-list"
+              onClick={deleteDJCallback}
+            >
+              <RiDeleteBin2Fill />
+            </div>
           </div>
-        </div>
+        }
       </>
     );
   };

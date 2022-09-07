@@ -1,8 +1,8 @@
-import { Axios, AxiosPromise } from "axios";
+import axios, { Axios, AxiosPromise } from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../models/axiosInstance";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { BsPlusCircleFill } from "react-icons/bs";
+import { BsPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
 
 type DjOverlay = {
   date: Date;
@@ -28,8 +28,26 @@ export default function DjListDjListTool() {
     open: false,
     setCurrEvents: setCurrEvents,
   });
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+
+  useEffect(() => {}, [month, year]);
 
   const [newDate, setNewDate] = useState<Date>();
+  const months = [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
+  ];
 
   const setCurrEventsEventCallback = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -60,39 +78,37 @@ export default function DjListDjListTool() {
   );
 
   const setNewDateCallback = useCallback(
-     (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       setNewDate(new Date(event.currentTarget.value));
     },
     [newDate, allDjs]
   );
 
   useEffect(() => {
-    var promises: AxiosPromise[] = [
-      axiosInstance.get("http://localhost:5000/getMonthDates"),
-      axiosInstance.get("http://localhost:5000/getEvents"),
-      axiosInstance.get("http://localhost:5000/getDjs"),
-    ];
-    Promise.all(promises).then((res) => {
-      var tempCurrEvents: any[] = [];
-      setDates(
-        res[0].data.map((date: string) => {
-          tempCurrEvents.push({ date: date, event: null, djs: [null] });
-          return new Date(date);
-        })
-      );
-      setCurrEvents(tempCurrEvents);
-      setAllEvents(res[1].data);
-      setAllDjs(res[2].data);
-    });
-  }, []);
+    if (month !== undefined && year !== undefined) {
+      var promises: AxiosPromise[] = [
+        axiosInstance.get(
+          `http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`
+        ),
+        axiosInstance.get("http://localhost:5000/getEvents"),
+        axiosInstance.get("http://localhost:5000/getDjs"),
+      ];
+      Promise.all(promises).then((res) => {
+        setDates(
+          res[0].data.map((date: any) => {
+            return new Date(date.date);
+          })
+        );
+        setCurrEvents([...res[0].data]);
+        setAllEvents(res[1].data);
+        setAllDjs(res[2].data);
+      });
+    }
+  }, [month, year]);
 
   const makeEventOptions = (event: any) => {
     return <option value={event.name}>{event.name}</option>;
   };
-
-  useEffect(() => {
-    console.log(dates);
-  }, [dates]);
 
   const makeDate = (date: Date, index: number) => {
     const options = {
@@ -103,14 +119,22 @@ export default function DjListDjListTool() {
     } as Intl.DateTimeFormatOptions;
     return (
       <>
-        <div>{date.toLocaleDateString("de-DE", options)}</div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {date.toLocaleDateString("de-DE", options)}
+          <BsFillDashCircleFill
+            style={{ marginLeft: "1em" }}
+            size={20}
+            id={date.toISOString().split("T")[0]}
+            onClick={remDate}
+          />
+        </div>
         <div>
           <select
             id={"event_" + String(index)}
             onChange={setCurrEventsEventCallback}
-            defaultValue={currEvents[index].event}
+            value={currEvents[index].event!==null ? currEvents[index].event : "" }
           >
-            <option value={0}></option>
+            <option value={""}></option>
             {allEvents?.map((event) => makeEventOptions(event))}
           </select>
         </div>
@@ -130,33 +154,101 @@ export default function DjListDjListTool() {
 
   const addDate = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      var tempDates = dates ? dates : [];
-      var tempEvents = currEvents ? currEvents : [];
-      if (
-        newDate !== undefined &&
-        tempEvents !== undefined &&
-        dates !== undefined
-      ) {
-        if (!dates.includes(newDate)) {
-          tempDates.push(newDate);
-          tempEvents.push({ date: newDate, event: null, djs: [] });
-          setCurrEvents(tempEvents);
-          setDates([...tempDates]);
-        }
-      }
+      axiosInstance.post('http://localhost:5000/addDate',{date: newDate?.toISOString().split('T')[0], month: month, year: year}).then(()=>{
+        axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
+          setDates(
+            res.data.map((date: any) => {
+              return new Date(date.date);
+            })
+          );
+          setCurrEvents([...res.data]);
+        })
+      })
     },
     [dates, newDate]
   );
 
+  const sendEvents = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      axiosInstance
+        .post("http://localhost:5000/createEvents", {
+          events: currEvents,
+          month: month,
+          year: year,
+        })
+        .then(()=>{
+          axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
+          setDates(
+            res.data.map((date: any) => {
+              return new Date(date.date);
+            })
+          );
+          setCurrEvents([...res.data]);}
+          );
+        })},
+    [currEvents]
+  );
+
+  useEffect(()=>{
+    console.log(currEvents)
+  },[currEvents])
+
+  const remDate = useCallback(
+    (event: React.MouseEvent<SVGAElement>) => {
+      const tempDate = event.currentTarget.id;
+      console.log(tempDate);
+      axiosInstance.post('http://localhost:5000/remDate',{date: tempDate, month: month, year: year}).then(()=>{
+        axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
+          setDates(
+            res.data.map((date: any) => {
+              return new Date(date.date);
+            })
+          );
+          setCurrEvents([...res.data]);
+        })
+      })
+    },
+    [dates !== undefined, allDjs !== undefined, dates, currEvents !== undefined]
+  );
+
   return (
     <>
+      <div className="month-year-selectors">
+        <select
+          defaultValue={month}
+          onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+            setMonth(Number(event.currentTarget.value));
+          }}
+        >
+          {months.map((m, index) => (
+            <option selected={index === month - 1} value={index + 1}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <input
+          type={"number"}
+          min={2022}
+          max={2040}
+          defaultValue={year}
+          onChange={async (event: React.ChangeEvent<HTMLInputElement>) => {
+            setYear(Number(event.currentTarget.value));
+          }}
+        ></input>
+      </div>
       <div className="dj-list-tool-table">
-        {dates && dates?.sort((a,b)=>a.getTime() - b.getTime()).map((date, index) => makeDate(date, index))}
+        {dates &&
+          dates
+            ?.sort((a, b) => a.getTime() - b.getTime())
+            .map((date, index) => makeDate(date, index))}
         <div className="dj-list-new-date">
           <input type={"date"} onChange={setNewDateCallback} />
           <div onClick={addDate}>
             <BsPlusCircleFill size={20} />
           </div>
+        </div>
+        <div className="dj-list-send-dj-list">
+          <button onClick={sendEvents}>Abschicken</button>
         </div>
 
         {djOverlay.open && (
@@ -190,16 +282,18 @@ export default function DjListDjListTool() {
     closeOverlay,
   }: DjChoiceOverlay) {
     const makeDj = (dj: any) => {
-      return (
-        <>
-          <input
-            type={"checkbox"}
-            id={dj.name}
-            defaultChecked={currEvents[index].djs.includes(dj.name)}
-          />
-          <label htmlFor={dj.name}>{dj.name}</label>
-        </>
-      );
+      if (currEvents !== undefined && index !== undefined && dj.name !== "") {
+        return (
+          <>
+            <input
+              type={"checkbox"}
+              id={dj.name}
+              defaultChecked={currEvents[index].djs.includes(dj.name)}
+            />
+            <label htmlFor={dj.name}>{dj.name}</label>
+          </>
+        );
+      }
     };
 
     return (
@@ -223,7 +317,7 @@ export default function DjListDjListTool() {
               var chosenDjs = allDjs
                 ?.filter((dj) => {
                   var cb = document.getElementById(dj.name) as HTMLInputElement;
-                  return cb.checked;
+                  return dj.name !== "" && cb.checked;
                 })
                 .map((dj) => dj.name);
               tempEvents[index ? index : 0].djs = chosenDjs;
