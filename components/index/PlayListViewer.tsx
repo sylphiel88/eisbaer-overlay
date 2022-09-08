@@ -39,7 +39,7 @@ export default function PlayListViewer(){
 
     return (
         <>
-            {lastDate!==undefined && <input type="date" className="playlist-date-picker" value={lastDate} onChange={(event:React.ChangeEvent<HTMLInputElement>)=>{setDate(event.currentTarget.valueAsDate)}}/>}
+            {lastDate!==undefined && <input type="date" className="playlist-date-picker" value={date?.toISOString().split('T')[0]} onChange={(event:React.ChangeEvent<HTMLInputElement>)=>{setDate(event.currentTarget.valueAsDate)}}/>}
             {date!==undefined && songInfos!==undefined && songInfos.length > 0 ? <div className="view-playlist">
                 <div className="playlist-wrapper">
                     <div className="playlist-header">{`Playlist ${event!==undefined && event!=="" ? event : "vom "+date?.toLocaleDateString('de-DE',options)}`}</div>
