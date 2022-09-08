@@ -200,3 +200,48 @@
 .month-year-selectors *{
   color: #000;
 }
+
+.preview-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.preview-settings {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 95%;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 20px;
+  background-color: darken($dj-tool-color-active, 10%);
+  border:1px inset darken($dj-tool-color-active, 20%);
+  box-shadow: 0 0 20px darken($dj-tool-color-active, 20%);
+}
+
+.preview-settings > input {
+  background-color: darken($dj-tool-color-active, 20%);
+  border-radius: 25px;
+  border: 1px outset lighten($dj-tool-color-active, 20%);
+  box-shadow: 0 0 10px darken($dj-tool-color-active, 20%);
+  height: fit-content;
+  padding: 0.5em;
+}
+
+.preview-image-wrapper{
+  width: fit-content;
+  height: 95%;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 20px;
+  background-color: darken($dj-tool-color-active, 10%);
+  border:1px inset darken($dj-tool-color-active, 20%);
+  box-shadow: 0 0 20px darken($dj-tool-color-active, 20%);
+}
+
+.preview-image-wrapper > img {
+  height: 100%;
+  width: auto;
+}

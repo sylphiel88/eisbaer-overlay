@@ -1134,6 +1134,51 @@ body {
   color: #000;
 }
 
+.preview-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.preview-settings {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 95%;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 20px;
+  background-color: #4a4950;
+  border: 1px inset #323136;
+  box-shadow: 0 0 20px #323136;
+}
+
+.preview-settings > input {
+  background-color: #323136;
+  border-radius: 25px;
+  border: 1px outset #96949e;
+  box-shadow: 0 0 10px #323136;
+  height: fit-content;
+  padding: 0.5em;
+}
+
+.preview-image-wrapper {
+  width: fit-content;
+  height: 95%;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 20px;
+  background-color: #4a4950;
+  border: 1px inset #323136;
+  box-shadow: 0 0 20px #323136;
+}
+
+.preview-image-wrapper > img {
+  height: 100%;
+  width: auto;
+}
+
 * {
   font-weight: 700;
   color: rgb(255, 255, 255);

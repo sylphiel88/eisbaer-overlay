@@ -65,7 +65,7 @@ export default function SideBar(props: {
   return (
     <>
       <div className="sidebar-section-list">
-        <SideBarSection sectionClass=" spotify-section" sectionTitle="Sportify">
+        <SideBarSection sectionClass=" spotify-section" sectionTitle="Spotify">
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
               props.useSpotifyHandler(e)

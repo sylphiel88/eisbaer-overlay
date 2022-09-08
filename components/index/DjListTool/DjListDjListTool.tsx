@@ -110,6 +110,10 @@ export default function DjListDjListTool() {
     return <option value={event.name}>{event.name}</option>;
   };
 
+  useEffect(()=>{
+    console.log(currEvents)
+  },[currEvents])
+
   const makeDate = (date: Date, index: number) => {
     const options = {
       weekday: "short",
