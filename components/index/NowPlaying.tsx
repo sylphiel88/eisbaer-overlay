@@ -41,11 +41,7 @@ export default function SpotifyNowPlaying(props: {
             },
           ],
           album: {
-            images: [
-              {
-                url: "",
-              },
-            ],
+            images: [],
           },
         },
       });
@@ -120,14 +116,14 @@ export default function SpotifyNowPlaying(props: {
         <div className="year">{`Aktuelles Jahr : ${props.year}`}</div>
       )}
       <div className="eisbaer-logo">
-        <img src={eisbaerlogo.src} alt=""></img>
+        <img src={'http://localhost:3000/'+eisbaerlogo.src} alt=""></img>
       </div>
       <div className="album-cover">
         <img
           src={
-            !props.useVirtualDj
+            !props.useVirtualDj && response?.item?.album?.images.length > 0
               ? response?.item?.album?.images[0].url
-              : platte.src
+              : 'http://localhost:3000/'+platte.src
           }
           alt=""
         />
@@ -139,7 +135,7 @@ export default function SpotifyNowPlaying(props: {
         <div className="spotify-logo-wrapper">
           <p className="spotify-logo-title">Powered By</p>
           <img
-            src={!props.useVirtualDj ? spotifylogo.src : virtuallogo.src}
+            src={!props.useVirtualDj ? 'http://localhost:3000/'+spotifylogo.src : 'http://localhost:3000/'+virtuallogo.src}
             className="spotify-logo"
           />
         </div>
@@ -147,7 +143,7 @@ export default function SpotifyNowPlaying(props: {
         {!props.useVirtualDj && (
           <div className="progress-bar">
             <div className="progress" style={{ width: `${width}%` }}>
-              <div className={`progress-text ${width < 10 ? "left" : "right"}`}>
+              <div className={`progress-text ${width < 21 ? "left" : "right"}`}>
                 {" "}
                 {`${formatTime(currPos)} / ${formatTime(duration)}`}
               </div>

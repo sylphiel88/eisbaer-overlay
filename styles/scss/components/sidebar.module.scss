@@ -36,8 +36,11 @@
 
 .sidebar-section-list {
     margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
     display: grid;
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
 }
 
 .sidebar-section-list-item {
@@ -52,8 +55,10 @@
     align-items: center;
     padding: 30px 0 30px 0;
     border-radius: 25px;
-    width: 100%;
-    max-width: 20vw;
+    min-height: 10vh;
+    min-width: 15vw;
+    width: fit-content;
+    padding: 5px;
 }
 
 .sidebar-section-list-item::before {
@@ -84,8 +89,10 @@
     padding: 30px 0 30px 0;
     border-radius: 25px;
     color: #fff;
-    width: 100%;
-    max-width: 20vw;
+    min-width: 15vw;
+    width: fit-content;
+    padding: 15px;
+    min-height: 10vh;
 }
 
 .sidebar-section-list-item-2::before {
@@ -169,13 +176,68 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    top: -1.9em;
+    position: absolute;
+    top:0;
+    right:0;
     width: 20%;
-    left: 9.1em;
     border-radius: 10px 25px 10px 25px;
     border: 1px outset rgba(#fff, 50%);
     backdrop-filter: blur(2px);
     box-shadow: 0 0 10px darken(rgba(#fff, 50%), 15%);
     color: #fff !important;
+}
+
+.bildschirme {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    width: 100%;
+    display: flow-root;
+    max-width: 100vw;
+}
+
+.bildschirme .icon-section {
+    display: none;
+}
+
+
+.year-input > input[type="number"]::-webkit-outer-spin-button, .year-input > input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.year-input {
+    position: relative;
+    width: 97%;
+    height: 4vh;
+}
+
+.year-input > * {
+    position: absolute;
+}
+
+.year-input > div {
+    width: 10%;
+    height: 82%;
+    top:2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 1%;
+}
+
+.add-to-already-taken {
+    background-color: rgba(darken(#0f0, 20%), 0.5);
+    border-radius: 0px 100px 100px 0px;
+    right: 2%;
+}
+
+.rem-from-already-taken {
+    background-color: rgba(darken(#f00, 20%), 0.5);
+    right: 12%;
+}
+
+.set-current-year {
+    background-color: rgba(darken(#ff0, 20%), 0.5);
+    right: 22%;
 }

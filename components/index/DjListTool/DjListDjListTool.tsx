@@ -110,9 +110,9 @@ export default function DjListDjListTool() {
     return <option value={event.name}>{event.name}</option>;
   };
 
-  useEffect(()=>{
-    console.log(currEvents)
-  },[currEvents])
+  useEffect(() => {
+    console.log(currEvents);
+  }, [currEvents]);
 
   const makeDate = (date: Date, index: number) => {
     const options = {
@@ -136,7 +136,9 @@ export default function DjListDjListTool() {
           <select
             id={"event_" + String(index)}
             onChange={setCurrEventsEventCallback}
-            value={currEvents[index].event!==null ? currEvents[index].event : "" }
+            value={
+              currEvents[index].event !== null ? currEvents[index].event : ""
+            }
           >
             <option value={""}></option>
             {allEvents?.map((event) => makeEventOptions(event))}
@@ -158,16 +160,26 @@ export default function DjListDjListTool() {
 
   const addDate = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      axiosInstance.post('http://localhost:5000/addDate',{date: newDate?.toISOString().split('T')[0], month: month, year: year}).then(()=>{
-        axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
-          setDates(
-            res.data.map((date: any) => {
-              return new Date(date.date);
-            })
-          );
-          setCurrEvents([...res.data]);
+      axiosInstance
+        .post("http://localhost:5000/addDate", {
+          date: newDate?.toISOString().split("T")[0],
+          month: month,
+          year: year,
         })
-      })
+        .then(() => {
+          axiosInstance
+            .get(
+              `http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`
+            )
+            .then((res) => {
+              setDates(
+                res.data.map((date: any) => {
+                  return new Date(date.date);
+                })
+              );
+              setCurrEvents([...res.data]);
+            });
+        });
     },
     [dates, newDate]
   );
@@ -180,37 +192,52 @@ export default function DjListDjListTool() {
           month: month,
           year: year,
         })
-        .then(()=>{
-          axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
-          setDates(
-            res.data.map((date: any) => {
-              return new Date(date.date);
-            })
-          );
-          setCurrEvents([...res.data]);}
-          );
-        })},
+        .then(() => {
+          axiosInstance
+            .get(
+              `http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`
+            )
+            .then((res) => {
+              setDates(
+                res.data.map((date: any) => {
+                  return new Date(date.date);
+                })
+              );
+              setCurrEvents([...res.data]);
+            });
+        });
+    },
     [currEvents]
   );
 
-  useEffect(()=>{
-    console.log(currEvents)
-  },[currEvents])
+  useEffect(() => {
+    console.log(currEvents);
+  }, [currEvents]);
 
   const remDate = useCallback(
     (event: React.MouseEvent<SVGAElement>) => {
       const tempDate = event.currentTarget.id;
       console.log(tempDate);
-      axiosInstance.post('http://localhost:5000/remDate',{date: tempDate, month: month, year: year}).then(()=>{
-        axiosInstance.get(`http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`).then((res)=>{
-          setDates(
-            res.data.map((date: any) => {
-              return new Date(date.date);
-            })
-          );
-          setCurrEvents([...res.data]);
+      axiosInstance
+        .post("http://localhost:5000/remDate", {
+          date: tempDate,
+          month: month,
+          year: year,
         })
-      })
+        .then(() => {
+          axiosInstance
+            .get(
+              `http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`
+            )
+            .then((res) => {
+              setDates(
+                res.data.map((date: any) => {
+                  return new Date(date.date);
+                })
+              );
+              setCurrEvents([...res.data]);
+            });
+        });
     },
     [dates !== undefined, allDjs !== undefined, dates, currEvents !== undefined]
   );
@@ -320,9 +347,12 @@ export default function DjListDjListTool() {
               var tempEvents = currEvents ? currEvents : [];
               var chosenDjs = allDjs
                 ?.filter((dj) => {
-                  var cb = document.getElementById(dj.name) as HTMLInputElement;
-                  return dj.name !== "" && cb.checked;
-                })
+                    var tempWin = window.open('','newWin')
+                    var cb = tempWin?.document.getElementById(
+                      dj.name
+                    ) as HTMLInputElement;
+                    return dj.name !== "" && cb.checked;
+                  })
                 .map((dj) => dj.name);
               tempEvents[index ? index : 0].djs = chosenDjs;
               if (setCurrEvents !== undefined) {

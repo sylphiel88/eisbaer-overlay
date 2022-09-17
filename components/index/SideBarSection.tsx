@@ -4,10 +4,11 @@ import { BsFillArrowUpCircleFill, BsFillArrowDownCircleFill, BsArrowUpRight } fr
 interface SideBarSection {
     children: ReactNode,
     sectionTitle: string,
-    sectionClass: string
+    sectionClass: string,
+    defaultOpen?: boolean
 }
 
-export default function SideBarSection({children, sectionTitle, sectionClass}:SideBarSection){
+export default function SideBarSection({children, sectionTitle, sectionClass, defaultOpen}:SideBarSection){
 
     const [sectionOpen, setOpen] = useState<boolean>(false)
 
@@ -16,7 +17,7 @@ export default function SideBarSection({children, sectionTitle, sectionClass}:Si
                 <div className="icon-section" onClick={(event:React.MouseEvent<HTMLDivElement>)=>{setOpen(!sectionOpen)}}>
                 {sectionOpen ? <BsFillArrowUpCircleFill/> : <BsFillArrowDownCircleFill/>}
                 </div>
-                {sectionOpen ? children : <div>{`Klicken um ${sectionTitle  } zu öffnen`}</div>}
+                {sectionOpen || defaultOpen ? children : <div>{`Klicken um ${sectionTitle  } zu öffnen`}</div>}
             </div>
     )
 }

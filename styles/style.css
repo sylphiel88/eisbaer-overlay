@@ -15,31 +15,8 @@ body {
   grid-template-columns: 1fr;
   gap: 25px;
   padding-left: 20px;
-  align-items: baseline;
-  justify-content: flex-start;
-  float: left;
-  width: 20%;
+  width: 100%;
   justify-content: center;
-}
-
-.side-bar-right {
-  position: absolute;
-  top: 10%;
-  right: 0;
-  height: 80%;
-  width: 5%;
-}
-
-.header {
-  width: 100%;
-  height: 10%;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 10%;
 }
 
 .content {
@@ -47,10 +24,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 75vw;
-  aspect-ratio: 16/9;
-  margin-left: 21vw;
+  width: 100vw;
+  height: 100vh;
   z-index: 2;
+  overflow: hidden;
 }
 
 .eisbaer-overlay {
@@ -107,8 +84,11 @@ body {
 
 .sidebar-section-list {
   margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
   display: grid;
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
 }
 
 .sidebar-section-list-item {
@@ -123,8 +103,10 @@ body {
   align-items: center;
   padding: 30px 0 30px 0;
   border-radius: 25px;
-  width: 100%;
-  max-width: 20vw;
+  min-height: 10vh;
+  min-width: 15vw;
+  width: fit-content;
+  padding: 5px;
 }
 
 .sidebar-section-list-item::before {
@@ -155,8 +137,10 @@ body {
   padding: 30px 0 30px 0;
   border-radius: 25px;
   color: #fff;
-  width: 100%;
-  max-width: 20vw;
+  min-width: 15vw;
+  width: fit-content;
+  padding: 15px;
+  min-height: 10vh;
 }
 
 .sidebar-section-list-item-2::before {
@@ -239,15 +223,69 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: -1.9em;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 20%;
-  left: 9.1em;
   border-radius: 10px 25px 10px 25px;
   border: 1px outset rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
   box-shadow: 0 0 10px rgba(217, 217, 217, 0.5);
   color: #fff !important;
+}
+
+.bildschirme {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  width: 100%;
+  display: flow-root;
+  max-width: 100vw;
+}
+
+.bildschirme .icon-section {
+  display: none;
+}
+
+.year-input > input[type=number]::-webkit-outer-spin-button, .year-input > input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.year-input {
+  position: relative;
+  width: 97%;
+  height: 4vh;
+}
+
+.year-input > * {
+  position: absolute;
+}
+
+.year-input > div {
+  width: 10%;
+  height: 82%;
+  top: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1%;
+}
+
+.add-to-already-taken {
+  background-color: rgba(0, 153, 0, 0.5);
+  border-radius: 0px 100px 100px 0px;
+  right: 2%;
+}
+
+.rem-from-already-taken {
+  background-color: rgba(153, 0, 0, 0.5);
+  right: 12%;
+}
+
+.set-current-year {
+  background-color: rgba(153, 153, 0, 0.5);
+  right: 22%;
 }
 
 .spotify-now-playing * {
@@ -297,11 +335,11 @@ body {
 }
 
 .right {
-  right: 10px;
+  right: 25px;
 }
 
 .left {
-  left: 10px;
+  left: 25px;
 }
 
 .album-cover p {
@@ -330,22 +368,23 @@ body {
   grid-row-end: 8;
   align-self: flex-end;
   height: -webkit-fill-available;
-  margin-top: 5%;
+  margin-top: 7%;
   max-width: 100%;
 }
 
 .progress-text {
   position: absolute;
-  font-size: 3em;
-  min-width: 250px;
+  font-size: 4em;
+  min-width: 300px;
   color: #fff;
 }
 
 .progress-bar {
   width: 102%;
-  height: 50px;
+  height: 75px;
+  line-height: 75px;
   margin-left: -1.4%;
-  margin-top: 1%;
+  margin-top: 3%;
   max-width: 100%;
 }
 
@@ -778,24 +817,33 @@ body {
   height: 100%;
 }
 
+.slot-machine-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
 .slot-machine {
   display: grid;
-  grid-template-columns: 200px 200px 200px 200px;
-  gap: 30px;
-  height: 350px;
-  width: 920px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5vw;
+  height: 35vh;
+  width: 61vw;
   overflow: hidden;
   background-color: rgb(82, 71, 71);
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 225px;
-  left: 190px;
+  top: 12vh;
+  left: -1.5vw;
 }
 
 .slot-wrapper {
   position: relative;
-  height: 310px;
+  height: 35vh;
   width: 200px;
   overflow: hidden;
 }
@@ -803,21 +851,22 @@ body {
 .slots {
   position: absolute;
   width: 100%;
-  height: 310px;
+  height: 35vh;
   transition: top ease-in-out 0.5s;
   text-align: center;
-  line-height: 310px;
+  line-height: 35vh;
 }
 
 .slots > div > span {
   -webkit-text-stroke: 2px rgb(58, 31, 12);
   color: rgb(180, 154, 112);
-  font-size: 60px;
+  font-size: 10vh;
   font-family: "Ultra";
 }
 
 .slot-machine-image {
-  height: 600px;
+  height: 70vh;
+  width: 90vw;
   z-index: 1;
   position: absolute;
 }
@@ -825,30 +874,34 @@ body {
 .slot-button {
   z-index: 3;
   position: absolute;
-  top: 113px;
-  right: 151px;
+  top: 15.5vh;
+  left: 88vw;
   background-color: rgba(0, 0, 0, 0) !important;
-  height: 107px;
-  width: 107px;
+  height: 12.5vh;
+  width: 7.2vw;
   font-size: 22pt;
   line-height: 70px;
   -webkit-text-stroke: 2px rgb(58, 31, 12);
   color: rgb(180, 154, 112);
+  border: 3px inset rgb(58, 31, 12) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 10px rgb(58, 31, 12) !important;
 }
 
 .slots > div {
-  height: 310px;
+  height: 35vh;
 }
 
 .shadow-overlay {
+  z-index: 1000;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   opacity: 0;
-  top: -49%;
+  top: 0;
+  left: 0;
   z-index: 100;
-  position: relative;
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -878,7 +931,7 @@ body {
 }
 .year-result {
   opacity: 0;
-  font-size: 50pt;
+  font-size: 30vh;
   animation: yearresanim 4s linear 1s 1 forwards;
 }
 
@@ -896,6 +949,10 @@ body {
     opacity: 0;
   }
 }
+.already-taken {
+  max-width: 15vw;
+}
+
 .playlist-date-picker {
   background-color: grey;
 }

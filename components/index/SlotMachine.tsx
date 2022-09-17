@@ -7,6 +7,8 @@ export default function SlotMachine(props: {
   year: number;
   numberOfTurns: number;
   setCurrView: Function;
+  addTakenYear: Function;
+  alreadyTakenYears: number[];
 }) {
   const values = [
     [1, 2],
@@ -27,16 +29,23 @@ export default function SlotMachine(props: {
 
   function numberSetter(currTurn: number) {
     currTurn += 1;
-
-    var year = Math.floor(Math.random() * 43 + 1980);
+    var year = 1000;
+    var years = Array.from(Array(44).keys())
+      .map((val) => val + 1979)
+      .filter((curYear) => !props.alreadyTakenYears.includes(curYear));
+    while (year === 1000) {
+      var index = Math.floor(Math.random() * years.length) + 1;
+      year = years[index];
+    }
     var thousand = Math.floor(year / 1000);
     var hundred = Math.floor((year - 1000 * thousand) / 100);
     var tens = Math.floor((year - 1000 * thousand - 100 * hundred) / 10);
     var digit = Math.floor(year - 1000 * thousand - 100 * hundred - 10 * tens);
     setNumber([thousand, hundred, tens, digit]);
-    if (currTurn >= props.numberOfTurns) {
+    if (currTurn >= props.numberOfTurns && year!==1000) {
       setCurrTurns(0);
       props.yearSetter(year);
+      props.addTakenYear(year);
       showYear();
     }
   }
@@ -44,8 +53,8 @@ export default function SlotMachine(props: {
   function showYear() {
     setShowResult(true);
     setTimeout(() => {
-        setShowResult(false);
-        props.setCurrView(0);
+      setShowResult(false);
+      props.setCurrView(0);
     }, 5000);
   }
 
@@ -62,7 +71,7 @@ export default function SlotMachine(props: {
   useEffect(() => {
     setTop(
       number.map((n, i) => {
-        return i === 0 ? 310 - 310 * n : -310 * n;
+        return i === 0 ? 35 - 35 * n : -35 * n;
       })
     );
   }, [number]);
@@ -74,9 +83,9 @@ export default function SlotMachine(props: {
   function makeSlot(values: number[], index: number) {
     return (
       <div className="slot-wrapper">
-        <div className="slots" style={{ top: top[index] }}>
+        <div className="slots" style={{ top: `${top[index]}vh` }}>
           {values.map((v) => (
-            <div key={"slot_"+index+"_"+v}>
+            <div key={"slot_" + index + "_" + v}>
               <span>{v}</span>
             </div>
           ))}
@@ -86,8 +95,12 @@ export default function SlotMachine(props: {
   }
 
   return (
-    <>
-      <img src={slotmachineimg.src} className="slot-machine-image" alt=""/>
+    <div className="slot-machine-wrapper">
+      <img
+        src={"http://localhost:3000/" + slotmachineimg.src}
+        className="slot-machine-image"
+        alt=""
+      />
       <div className="slot-machine">{values.map((v, i) => makeSlot(v, i))}</div>
       <button
         className="eisbaer-overlay-button slot-button"
@@ -110,6 +123,6 @@ export default function SlotMachine(props: {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

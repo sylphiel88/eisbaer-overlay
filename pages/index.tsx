@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SideBar from "../components/index/SideBar";
 import SlotMachine from "../components/index/SlotMachine";
 import TopBar from "../components/index/TopBar";
@@ -9,6 +9,7 @@ import axiosInstance from "../models/axiosInstance";
 import NowPlaying from "../components/index/NowPlaying";
 import PlayListViewer from "../components/index/PlayListViewer";
 import DjListTool from "../components/index/DjListTool/DjListTool";
+import ViewWindow from "../components/index/ViewWindow";
 
 
 const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
@@ -17,21 +18,34 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
   const [useSlotMachine, setUseSlotMachine] = useState<boolean>(false);
   const [currView, setCurrView] = useState<number>(0);
   const [youtubeLinks, setYoutubeLinks] = useState<string[]>([]);
-  const [year, setYear] = useState<number>();
+  const [year, setYear] = useState<number>(1000);
   const [numberOfTurns, setNumberOfTurns] = useState<number>(30);
   const [refreshToken, setRefreshToken] = useState<string>("")
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string>("")
   const [useVirtualDJ, setUseVirtualDJ] = useState<boolean>(false)
   const [virtualDJData, setVirtualDJData] = useState<any>()
+  const [viewWindow, setViewWindow] = useState<boolean>(true)
+  const [theWindow, setTheWindow] = useState<boolean>(false)
+  const close = useCallback(()=>{setViewWindow(false)},[viewWindow])
+  const [alreadyTakenYears, setAlreadyTakenYears] = useState<number[]>([])
 
   const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan"];
+
+  useEffect(()=>{
+    console.log(alreadyTakenYears)
+  },[alreadyTakenYears])
 
   useEffect(() => {
     let newToken = window.localStorage.getItem("token");
     if (newToken) {
       setToken(newToken);
     }
+    setTheWindow(true)
   }, []);
+
+  useEffect(()=>{
+    setViewWindow(true)
+  },[currView])
 
   useEffect(()=>{
     if(useVirtualDJ!==undefined && useVirtualDJ){
@@ -88,13 +102,6 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
         <title>Eisbär Overlay</title>
       </Head>
       <main className="overlay-main">
-        <div className="header">
-          <TopBar
-            setCurrView={changeCurrView}
-            views={views}
-            currView={currView}
-          />
-        </div>
         <div className="side-bar-left">
           <SideBar
             useSpotifyHandler={useSpotifyHandler}
@@ -117,9 +124,13 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
             clientId={client_id}
             clientSecret={client_secret}
             refreshToken={refreshToken}
+            yearSetter={setYear}
+            alreadyTakenYears={alreadyTakenYears}
+            setAlreadyTakenYears={(year:number)=>{setAlreadyTakenYears([...alreadyTakenYears, year])}}
+            remAlreadyTakenYears={(year:number)=>{setAlreadyTakenYears(alreadyTakenYears.filter(cur=>cur!==year))}}
           />
         </div>
-        <div className="content">
+        {viewWindow===true && <ViewWindow currView={currView} close={close} styles={theWindow ? window.document.head.getElementsByTagName('style'):null}><div className="content">
           <div className="eisbaer-overlay">
             {currView == 0 && (
               <NowPlaying
@@ -138,15 +149,15 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
                 year={year && useSlotMachine ? year : 1000}
                 numberOfTurns={numberOfTurns}
                 setCurrView={setCurrView}
+                addTakenYear={(year:number)=>setAlreadyTakenYears([...alreadyTakenYears, year])}
+                alreadyTakenYears={alreadyTakenYears}
               />
             )}
             {currView == 2 && <YoutubeIFrame youtubeLink={currentlyPlaying!=="" && currentlyPlaying!==undefined ? currentlyPlaying : ""} />}
             {currView == 3 && <PlayListViewer />}
             {currView == 4 && <DjListTool/>}
           </div>
-        </div>
-        <div className="side-bar-right"></div>
-        <div className="footer"></div>
+        </div></ViewWindow>}
       </main>
     </>
   );

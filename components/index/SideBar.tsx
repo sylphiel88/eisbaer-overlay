@@ -4,6 +4,9 @@ import axiosInstance from "../../models/axiosInstance";
 import { AxiosPromise } from "axios";
 import YouTubeInfo from "./YouTubeInfo";
 import SideBarSection from "./SideBarSection";
+import TopBarButton from "./TopBarButton";
+import { BsCheck, BsPlus } from "react-icons/bs";
+import { FiMinus } from "react-icons/fi";
 
 export default function SideBar(props: {
   useSpotifyHandler: React.MouseEventHandler<HTMLButtonElement>;
@@ -26,12 +29,21 @@ export default function SideBar(props: {
   clientSecret: string;
   clientId: string;
   refreshToken: string;
+  yearSetter: Function;
+  alreadyTakenYears: number[];
+  setAlreadyTakenYears: Function;
+  remAlreadyTakenYears:Function;
 }) {
   const SCOPE = "user-read-currently-playing";
   const REDIRECT_URI =
     "http://localhost:3000/api/spotify/authorizationCodeCallback";
 
   const [youtubeInfos, setYoutubeInfos] = useState<any[]>([]);
+  const [year, setYear] = useState<number>(1000);
+
+  useEffect(() => {
+    setYear(props.slotMachineYear);
+  }, [props.slotMachineYear]);
 
   function makeVideo(video: any) {
     return (
@@ -62,9 +74,27 @@ export default function SideBar(props: {
     });
   }, [props.youtubeLinks]);
 
+  function makeTab(v: string, i: number): JSX.Element {
+    return (
+      <TopBarButton
+        active={props.currView === i}
+        index={i}
+        name={props.views[i]}
+        setCurrView={props.setCurrView}
+      />
+    );
+  }
+
   return (
     <>
       <div className="sidebar-section-list">
+        <SideBarSection
+          sectionClass="-2 bildschirme"
+          sectionTitle="Bildschirm auswählen"
+          defaultOpen
+        >
+          {props.views.map((view, index) => makeTab(view, index))}
+        </SideBarSection>
         <SideBarSection sectionClass=" spotify-section" sectionTitle="Spotify">
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
@@ -149,7 +179,54 @@ export default function SideBar(props: {
           }!`}</button>
           {props.useSlotMachine && (
             <>
-              <p>{props.slotMachineYear}</p>
+              <div className="year-input">
+                <input
+                  type={"number"}
+                  value={year}
+                  className="youtube-link"
+                  id="year-input"
+                  onChange={async (event: React.ChangeEvent) => {
+                    let input = event.currentTarget as HTMLInputElement;
+                    setYear(Number(input.value));
+                  }}
+                />
+                <div
+                  className="add-to-already-taken"
+                  onClick={(event: React.MouseEvent) => {
+                    let input = document.getElementById(
+                      "year-input"
+                    ) as HTMLInputElement;
+                    if (
+                      !props.alreadyTakenYears.includes(Number(input.value))
+                    ) {
+                      props.setAlreadyTakenYears(Number(input.value));
+                    }
+                  }}
+                >
+                  <BsPlus />
+                </div>
+                <div
+                  className="rem-from-already-taken"
+                  onClick={(event: React.MouseEvent) => {
+                    let input = document.getElementById(
+                      "year-input"
+                    ) as HTMLInputElement;
+                    if (
+                      props.alreadyTakenYears.includes(Number(input.value))
+                    ) {
+                      props.remAlreadyTakenYears(Number(input.value));
+                    }
+                  }}
+                >
+                  <FiMinus />
+                </div>
+                <div className="set-current-year" onClick={(event:React.MouseEvent)=>{
+                  let input = document.getElementById('year-input') as HTMLInputElement
+                  props.yearSetter(Number(input.value))
+                }}>
+                  <BsCheck />
+                </div>
+              </div>
               <span>Anzahl Drehungen ~ 0.5s pro Drehung</span>
               <input
                 className="youtube-link"
@@ -163,6 +240,7 @@ export default function SideBar(props: {
               />
               <br />
               <span>{`~ ${props.numberOfTurns / 2}s`}</span>
+              <span className="already-taken">Bereits gewählte Jahre:<br/>{props.alreadyTakenYears.join(", ")}</span>
             </>
           )}
         </SideBarSection>
@@ -177,7 +255,7 @@ export default function SideBar(props: {
               id="virtual-dj-check"
               className="virtual-dj-check"
             />
-            Virtual DJ benutzen 
+            Virtual DJ benutzen
           </div>
         </SideBarSection>
       </div>

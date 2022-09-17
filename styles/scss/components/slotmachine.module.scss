@@ -1,22 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Ultra&display=swap');
 
+.slot-machine-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
 .slot-machine {
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    gap: 30px;
-    height: 350px;
-    width: 920px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5vw;
+    height: 35vh;
+    width: 61vw;
     overflow: hidden;
     background-color: rgb(82, 71, 71);
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 225px;
-    left: 190px;
+    top: 12vh;
+    left: -1.5vw
 }
 .slot-wrapper {
     position: relative;
-    height: 310px;
+    height: 35vh;
     width: 200px;
     overflow: hidden;
 }
@@ -24,21 +33,22 @@
 .slots {
     position: absolute;
     width: 100%;
-    height: 310px;
+    height: 35vh;
     transition: top ease-in-out 0.5s;
     text-align: center;
-    line-height: 310px;
+    line-height: 35vh;
 }
 
 .slots > div > span {
     -webkit-text-stroke: 2px rgb(58, 31, 12);
     color:rgb(180, 154, 112);
-    font-size: 60px;
+    font-size: 10vh;
     font-family: 'Ultra';
 }
 
 .slot-machine-image {
-    height: 600px;
+    height: 70vh;
+    width: 90vw;
     z-index: 1;
     position: absolute;
 }
@@ -46,30 +56,34 @@
 .slot-button {
     z-index: 3;
     position: absolute;
-    top: 113px;
-    right: 151px;
+    top: 15.5vh;
+    left:88vw;
     background-color: rgba(0,0,0,0) !important;
-    height: 107px;
-    width: 107px;
+    height: 12.5vh;
+    width: 7.2vw;
     font-size: 22pt;
     line-height: 70px;
     -webkit-text-stroke: 2px rgb(58, 31, 12);
     color:rgb(180, 154, 112);
+    border: 3px inset rgb(58, 31, 12) !important;
+    box-shadow: 0 0 20px rgba(#fff,0.5), 0 0 10px rgb(58, 31, 12) !important;
 }
 
 .slots > div {
-    height: 310px;
+    height: 35vh;
 }
 
 .shadow-overlay {
+    z-index: 1000;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    top: -49%;
+    top: 0;
+    left:0;
     z-index: 100;
-    position: relative;
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.5);
@@ -98,7 +112,7 @@
 
 .year-result {
     opacity: 0;
-    font-size: 50pt;
+    font-size: 30vh;
     animation: yearresanim 4s linear 1s 1 forwards;
 }
 
@@ -115,4 +129,8 @@
     100% {
         opacity: 0;
     }
+}
+
+.already-taken {
+    max-width: 15vw;
 }
