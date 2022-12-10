@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import querystring from "query-string";
 
@@ -22,11 +23,11 @@ const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
 };
 
 export const getNowPlaying = async (refresh_token: string) => {
-  
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
   const { access_token } = await getAccessToken(refresh_token);
+  var auth = "Bearer " + access_token
   return fetch(NOW_PLAYING_ENDPOINT, {
-    headers: { Authorization: `Bearer ${access_token}` },
+    headers: { "Authorization": auth },
   });
 };
 
@@ -34,11 +35,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  
   if (req.method === "POST") {
     var refresh_token = req.body["refresh_token"];
     if (refresh_token !== undefined && refresh_token!=="") {
       const response = await getNowPlaying(req.body.refresh_token);
-
       if (response.status === 204 || response.status === 400) {
         return res.status(200).json({ isPlaying: false });
       }

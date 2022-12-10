@@ -31,8 +31,10 @@ export default function SlotMachine(props: {
     currTurn += 1;
     var year = 1000;
     var years = Array.from(Array(44).keys())
-      .map((val) => val + 1979)
+    years.push(-9)
+    years = years.map((val) => val + 1979)
       .filter((curYear) => !props.alreadyTakenYears.includes(curYear));
+    console.log(years)
     while (year === 1000) {
       var index = Math.floor(Math.random() * years.length) + 1;
       year = years[index];
@@ -42,7 +44,7 @@ export default function SlotMachine(props: {
     var tens = Math.floor((year - 1000 * thousand - 100 * hundred) / 10);
     var digit = Math.floor(year - 1000 * thousand - 100 * hundred - 10 * tens);
     setNumber([thousand, hundred, tens, digit]);
-    if (currTurn >= props.numberOfTurns && year!==1000) {
+    if (currTurn >= props.numberOfTurns && year !== 1000) {
       setCurrTurns(0);
       props.yearSetter(year);
       props.addTakenYear(year);

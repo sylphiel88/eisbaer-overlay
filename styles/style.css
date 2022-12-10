@@ -318,8 +318,8 @@ body {
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  color: #61341f;
-  text-shadow: 0px 0px #88492b, -0.15px -0.15px #8a4a2c, -0.3px -0.3px #8c4b2d, -0.45px -0.45px #8f4c2e, -0.6px -0.6px #914e2e, -0.75px -0.75px #934f2f, -0.9px -0.9px #965030, -1.05px -1.05px #985131, -1.2px -1.2px #9a5331, -1.35px -1.35px #9d5432, -1.5px -1.5px #9f5533, -1.65px -1.65px #a15634, -1.8px -1.8px #a35834, -1.95px -1.95px #a65935, -2.1px -2.1px #a85a36, -2.25px -2.25px #aa5b36, -2.4px -2.4px #ad5d37, -2.55px -2.55px #af5e38, -2.7px -2.7px #b15f39, -2.85px -2.85px #b46039, -3px -3px #b6623a, 0 0 10px #88492b;
+  color: #866c5f;
+  text-shadow: 0px 0px #a08578, -0.15px -0.15px #a1877a, -0.3px -0.3px #a2897c, -0.45px -0.45px #a38a7e, -0.6px -0.6px #a58c80, -0.75px -0.75px #a68e81, -0.9px -0.9px #a78f83, -1.05px -1.05px #a89185, -1.2px -1.2px #aa9287, -1.35px -1.35px #ab9489, -1.5px -1.5px #ac968a, -1.65px -1.65px #ae978c, -1.8px -1.8px #af998e, -1.95px -1.95px #b09a90, -2.1px -2.1px #b19c91, -2.25px -2.25px #b39e93, -2.4px -2.4px #b49f95, -2.55px -2.55px #b5a197, -2.7px -2.7px #b6a399, -2.85px -2.85px #b8a49a, -3px -3px #b9a69c, 0 0 10px #a08578;
 }
 
 .eisbaer-logo img {
@@ -440,7 +440,7 @@ body {
 }
 
 .year {
-  font-size: 2.5em;
+  font-size: 5em;
 }
 
 .wheel {

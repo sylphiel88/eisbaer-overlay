@@ -6,6 +6,13 @@ import spotifylogo from "../../assets/images/Spotify_Logo.png";
 import virtuallogo from "../../assets/images/vdj.png";
 import platte from "../../assets/images/platte.png";
 import axiosInstance from "../../models/axiosInstance";
+import Marquee from 'react-fast-marquee'
+
+type PartyEvent = {
+  date: string,
+  event: string,
+  djs: string[]
+}
 
 export default function SpotifyNowPlaying(props: {
   token: string | undefined;
@@ -24,7 +31,31 @@ export default function SpotifyNowPlaying(props: {
   const [albumTitle, setAlbumTitle] = useState<string>("");
   const [width, setWidth] = useState<number>(0);
   const [refreshSpotify, setRefreshSpotify] = useState<number>(0);
+  const [events, setEvents] = useState<PartyEvent[]>()
 
+  const year = new Date().getFullYear()
+  const month = new Date().getMonth() + 1
+
+  useEffect(() => {
+    if (year !== undefined && month !== undefined) {
+      axiosInstance.get(
+        `http://localhost:5000/loadCurrEvents?month=${month}&year=${year}`
+      ).then((res) => {
+        setEvents(res.data)
+      })
+    }
+  }, [year, month])
+
+  useEffect(() => {
+    if (events !== undefined) {
+      let filteredEvents = events.filter(ev => {
+        return (Number(/\d\d\d\d-\d\d-(\d\d)/.exec(ev.date)!["1"])) > new Date().getDate()
+      })
+      if(filteredEvents.length != events.length){
+        setEvents(filteredEvents)
+      }
+    }
+  }, [events])
 
   useEffect(() => {
     if (props.useSpotify && !props.useVirtualDj) {
@@ -98,6 +129,12 @@ export default function SpotifyNowPlaying(props: {
         .finally(() => {
           setTimeout(() => setRefreshSpotify(refreshSpotify + 1), 1000);
         });
+    } else if (props.useVirtualDj) {
+      axios.get(
+        `http://localhost:5000/getCurrentSong`)
+        .then((res) => {
+          setResponse(response.data)
+        })
     }
   }
 
@@ -113,17 +150,17 @@ export default function SpotifyNowPlaying(props: {
   return (
     <div className="spotify-now-playing">
       {props.year >= 1980 && (
-        <div className="year">{`Aktuelles Jahr : ${props.year}`}</div>
+        <div className="year">{`${props.year}${props.year === 1970 ? "s" : ""}`}</div>
       )}
       <div className="eisbaer-logo">
-        <img src={'http://localhost:3000/'+eisbaerlogo.src} alt=""></img>
+        <img src={'http://localhost:3000/' + eisbaerlogo.src} alt=""></img>
       </div>
       <div className="album-cover">
         <img
           src={
             !props.useVirtualDj && response?.item?.album?.images.length > 0
               ? response?.item?.album?.images[0].url
-              : 'http://localhost:3000/'+platte.src
+              : 'http://localhost:3000/' + platte.src
           }
           alt=""
         />
@@ -135,7 +172,7 @@ export default function SpotifyNowPlaying(props: {
         <div className="spotify-logo-wrapper">
           <p className="spotify-logo-title">Powered By</p>
           <img
-            src={!props.useVirtualDj ? 'http://localhost:3000/'+spotifylogo.src : 'http://localhost:3000/'+virtuallogo.src}
+            src={!props.useVirtualDj ? 'http://localhost:3000/' + spotifylogo.src : 'http://localhost:3000/' + virtuallogo.src}
             className="spotify-logo"
           />
         </div>
@@ -143,7 +180,7 @@ export default function SpotifyNowPlaying(props: {
         {!props.useVirtualDj && (
           <div className="progress-bar">
             <div className="progress" style={{ width: `${width}%` }}>
-              <div className={`progress-text ${width < 21 ? "left" : "right"}`}>
+              <div className={`progress-text ${width < 30 ? "left" : "right"}`}>
                 {" "}
                 {`${formatTime(currPos)} / ${formatTime(duration)}`}
               </div>
@@ -151,6 +188,19 @@ export default function SpotifyNowPlaying(props: {
           </div>
         )}
       </div>
+      <div style={{display:"flex", height:"100%", width:"100%", flexDirection:"column", justifyContent:"center", gridColumnStart:"1", gridColumnEnd:"12", gridRowStart:"5", gridRowEnd:"6"}}>
+        <Marquee gradient={false} speed={10}>
+          {
+            events?.map(ev=>{
+              let tempDate = ev.date;
+              let results = (/(\d\d\d\d)-(\d\d)-(\d\d)/).exec(tempDate)
+              let day = results!["3"]
+              let month = results!["2"]
+              return <span style={{fontSize:"25pt", marginLeft:"200px"}}>{day}.{month}.&nbsp;{ev.event}&nbsp;</span>
+            })
+          }
+          </Marquee>
+          </div>
     </div>
   );
 }
