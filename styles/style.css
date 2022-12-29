@@ -405,6 +405,7 @@ body {
   overflow: hidden;
   width: 84%;
   text-overflow: ellipsis;
+  color: red !important;
 }
 
 .current-song {
@@ -1234,6 +1235,21 @@ body {
 .preview-image-wrapper > img {
   height: 100%;
   width: auto;
+}
+
+.veranstaltungen-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.veranstaltungen-wrapper > div {
+  padding: 20px;
+  width: 50%;
+  height: 80%;
+  background-color: red;
 }
 
 * {

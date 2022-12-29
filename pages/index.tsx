@@ -10,6 +10,7 @@ import NowPlaying from "../components/index/NowPlaying";
 import PlayListViewer from "../components/index/PlayListViewer";
 import DjListTool from "../components/index/DjListTool/DjListTool";
 import ViewWindow from "../components/index/ViewWindow";
+import Veranstaltungen from "../components/Veranstaltungen";
 
 
 const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
@@ -29,7 +30,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
   const close = useCallback(()=>{setViewWindow(false)},[viewWindow])
   const [alreadyTakenYears, setAlreadyTakenYears] = useState<number[]>([])
 
-  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan"];
+  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan", "Veranstaltungen"];
 
   useEffect(()=>{
     console.log(alreadyTakenYears)
@@ -156,6 +157,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
             {currView == 2 && <YoutubeIFrame youtubeLink={currentlyPlaying!=="" && currentlyPlaying!==undefined ? currentlyPlaying : ""} />}
             {currView == 3 && <PlayListViewer />}
             {currView == 4 && <DjListTool/>}
+            {currView == 5 && <Veranstaltungen/>}
           </div>
         </div></ViewWindow>}
       </main>

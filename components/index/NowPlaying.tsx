@@ -189,14 +189,14 @@ export default function SpotifyNowPlaying(props: {
         )}
       </div>
       <div style={{display:"flex", height:"100%", width:"100%", flexDirection:"column", justifyContent:"center", gridColumnStart:"1", gridColumnEnd:"12", gridRowStart:"5", gridRowEnd:"6"}}>
-        <Marquee gradient={false} speed={10}>
+        <Marquee gradient={false} speed={0.5}>
           {
             events?.map(ev=>{
               let tempDate = ev.date;
               let results = (/(\d\d\d\d)-(\d\d)-(\d\d)/).exec(tempDate)
               let day = results!["3"]
               let month = results!["2"]
-              return <span style={{fontSize:"25pt", marginLeft:"200px"}}>{day}.{month}.&nbsp;{ev.event}&nbsp;</span>
+              return <span style={{fontSize:"25pt", marginLeft:"500px", textShadow:"-5px -5px 10px rgb(200,200,200)"}}>{day}.{month}.&nbsp;{ev.event}&nbsp;</span>
             })
           }
           </Marquee>
