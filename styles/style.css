@@ -1334,6 +1334,27 @@ body {
   color: #e43121;
 }
 
+.miniNowPlaying {
+  background-color: black;
+  position: absolute;
+  top: -400px;
+  left: 560px;
+  width: 1920px !important;
+  height: 1080px !important;
+  padding: 100px !important;
+  animation: zoom 1s ease-in 0s forwards;
+  border-radius: 100px;
+  border: 5px solid white;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(0.18);
+  }
+}
 * {
   font-weight: 700;
   color: rgb(255, 255, 255);

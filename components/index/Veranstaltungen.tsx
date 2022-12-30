@@ -1,8 +1,19 @@
 import { CSSProperties, useEffect, useState } from "react"
 import axiosInstance from "../../models/axiosInstance"
+import SpotifyNowPlaying from "./NowPlaying";
 import VeranstaltungPanel from "./Veranstaltung/VeranstaltungPanel"
 
-const Veranstaltungen = () => {
+interface iVeranstaltungen {
+    token: string | undefined;
+  useSpotify: boolean;
+  year: number;
+  refreshToken: string;
+  useVirtualDj: boolean;
+  virtualDJData: any;
+  record: boolean;
+}
+
+const Veranstaltungen = ({token, useSpotify, year, refreshToken, useVirtualDj, virtualDJData, record}:iVeranstaltungen) => {
 
     const [nextEvents, getNextEvents] = useState<any[]>()
 
@@ -38,6 +49,17 @@ const Veranstaltungen = () => {
                     return <div style={{ "--i": index, "--w": angle } as CSSProperties}><VeranstaltungPanel event={event} className={realCurrIndex === index? "current" : ""} /></div>
                 })}
             </div>
+        </div>
+        <div className="miniNowPlaying">
+        <SpotifyNowPlaying
+            record={record}
+            refreshToken={refreshToken}
+            token={token}
+            useSpotify={useSpotify}
+            useVirtualDj={useVirtualDj}
+            virtualDJData={virtualDJData}
+            year={year}
+        />
         </div>
     </div>
 }

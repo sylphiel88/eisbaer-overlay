@@ -166,7 +166,14 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
             {currView == 2 && <YoutubeIFrame youtubeLink={currentlyPlaying!=="" && currentlyPlaying!==undefined ? currentlyPlaying : ""} />}
             {currView == 3 && <PlayListViewer />}
             {currView == 4 && <DjListTool/>}
-            {currView == 5 && <Veranstaltungen/>}
+            {currView == 5 && <Veranstaltungen
+                token={token}
+                useSpotify={useSpotify}
+                year={year && useSlotMachine ? year : 1000}
+                refreshToken={refreshToken}
+                useVirtualDj={useVirtualDJ}
+                virtualDJData={virtualDJData}
+                record = {recordSongs}/>}
           </div>
         </div></ViewWindow>}
       </main>
