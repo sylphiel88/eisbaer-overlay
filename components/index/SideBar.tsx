@@ -33,6 +33,7 @@ export default function SideBar(props: {
   alreadyTakenYears: number[];
   setAlreadyTakenYears: Function;
   remAlreadyTakenYears:Function;
+  reloadWindow:Function;
 }) {
   const SCOPE = "user-read-currently-playing";
   const REDIRECT_URI =
@@ -257,6 +258,9 @@ export default function SideBar(props: {
             />
             Virtual DJ benutzen
           </div>
+        </SideBarSection>
+        <SideBarSection sectionClass="-2" sectionTitle="Fenster neu laden">
+          <button className="eisbaer-overlay-button-2" onClick={(event:React.MouseEvent)=>{event.preventDefault(); props.reloadWindow()}}>Neu Laden</button>
         </SideBarSection>
       </div>
     </>

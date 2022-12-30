@@ -10,7 +10,7 @@ import NowPlaying from "../components/index/NowPlaying";
 import PlayListViewer from "../components/index/PlayListViewer";
 import DjListTool from "../components/index/DjListTool/DjListTool";
 import ViewWindow from "../components/index/ViewWindow";
-import Veranstaltungen from "../components/Veranstaltungen";
+import Veranstaltungen from "../components/index/Veranstaltungen";
 
 
 const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
@@ -97,6 +97,14 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
     setYoutubeLinks(youtubeLinks.filter(vid=>vid!==video))
   }
 
+  const reloadWindow = () => {
+    open('', "newWin")!.close()
+    setViewWindow(false)
+    setTimeout(()=>{
+      setViewWindow(true)
+    },200)
+  }
+
   return (
     <>
       <Head>
@@ -129,6 +137,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
             alreadyTakenYears={alreadyTakenYears}
             setAlreadyTakenYears={(year:number)=>{setAlreadyTakenYears([...alreadyTakenYears, year])}}
             remAlreadyTakenYears={(year:number)=>{setAlreadyTakenYears(alreadyTakenYears.filter(cur=>cur!==year))}}
+            reloadWindow={reloadWindow}
           />
         </div>
         {viewWindow===true && <ViewWindow currView={currView} close={close} styles={theWindow ? window.document.head.getElementsByTagName('style'):null}><div className="content">
