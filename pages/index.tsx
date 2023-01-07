@@ -11,6 +11,7 @@ import PlayListViewer from "../components/index/PlayListViewer";
 import DjListTool from "../components/index/DjListTool/DjListTool";
 import ViewWindow from "../components/index/ViewWindow";
 import Veranstaltungen from "../components/index/Veranstaltungen";
+import IntroJan from "../components/index/IntroJan";
 
 
 const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
@@ -29,8 +30,11 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
   const [theWindow, setTheWindow] = useState<boolean>(false)
   const close = useCallback(()=>{setViewWindow(false)},[viewWindow])
   const [alreadyTakenYears, setAlreadyTakenYears] = useState<number[]>([])
+  const [introSong, setIntroSong] = useState<boolean>(false)
+  const [introSound, setIntroSound] = useState<HTMLAudioElement>()
 
-  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan", "Veranstaltungen"];
+  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan", "Veranstaltungen", "Jan Intro"];
+
 
   useEffect(()=>{
     console.log(alreadyTakenYears)
@@ -42,6 +46,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
       setToken(newToken);
     }
     setTheWindow(true)
+    setIntroSound(new Audio("./jan_intro.mp3"))
   }, []);
 
   useEffect(()=>{
@@ -151,6 +156,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
                 useVirtualDj={useVirtualDJ}
                 virtualDJData={virtualDJData}
                 record = {recordSongs}
+                intro={introSong}
               />
             )}
             {currView == 1 && (
@@ -174,6 +180,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
                 useVirtualDj={useVirtualDJ}
                 virtualDJData={virtualDJData}
                 record = {recordSongs}/>}
+              {currView == 6 && <IntroJan setPage={setCurrView} setSong={setIntroSong} introSound={introSound}/>}
           </div>
         </div></ViewWindow>}
       </main>

@@ -5,6 +5,7 @@ import eisbaerlogo from "../../assets/images/eisbaerlogo.png";
 import spotifylogo from "../../assets/images/Spotify_Logo.png";
 import virtuallogo from "../../assets/images/vdj.png";
 import platte from "../../assets/images/platte.png";
+import future from "../../assets/images/futureworld.jpg";
 import axiosInstance from "../../models/axiosInstance";
 import Marquee from 'react-fast-marquee'
 
@@ -22,6 +23,7 @@ export default function SpotifyNowPlaying(props: {
   useVirtualDj: boolean;
   virtualDJData: any;
   record: boolean;
+  intro?: boolean
 }) {
   const [response, setResponse] = useState<any>();
   const [duration, setDuration] = useState<number>(0);
@@ -51,7 +53,7 @@ export default function SpotifyNowPlaying(props: {
       let filteredEvents = events.filter(ev => {
         return (Number(/\d\d\d\d-\d\d-(\d\d)/.exec(ev.date)!["1"])) > new Date().getDate()
       })
-      if(filteredEvents.length != events.length){
+      if (filteredEvents.length != events.length) {
         setEvents(filteredEvents)
       }
     }
@@ -61,21 +63,39 @@ export default function SpotifyNowPlaying(props: {
     if (props.useSpotify && !props.useVirtualDj) {
       getCurrentTitle(undefined);
     } else {
-      setResponse({
-        progress_ms: 260000,
-        item: {
-          name: "Hello I'm a Song",
-          duration_ms: 817000,
-          artists: [
-            {
-              name: "Eisbär Metalkeller",
+      if (!props.intro) {
+        setResponse({
+          progress_ms: 260000,
+          item: {
+            name: "Hello I'm a Song",
+            duration_ms: 817000,
+            artists: [
+              {
+                name: "Eisbär Metalkeller",
+              },
+            ],
+            album: {
+              images: [],
             },
-          ],
-          album: {
-            images: [],
           },
-        },
-      });
+        });
+      } else {
+        setResponse({
+          progress_ms: 260000,
+          item: {
+            name: "Future World",
+            duration_ms: 817000,
+            artists: [
+              {
+                name: "Pretty Maids",
+              },
+            ],
+            album: {
+              images: [{url:"http://localhost:3000/futureworld.jpg"}],
+            },
+          },
+        });
+      }
     }
   }, [props.useSpotify, props.useVirtualDj]);
 
@@ -188,19 +208,19 @@ export default function SpotifyNowPlaying(props: {
           </div>
         )}
       </div>
-      <div style={{display:"flex", height:"100%", width:"100%", flexDirection:"column", justifyContent:"center", gridColumnStart:"1", gridColumnEnd:"12", gridRowStart:"5", gridRowEnd:"6"}}>
+      <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: "column", justifyContent: "center", gridColumnStart: "1", gridColumnEnd: "12", gridRowStart: "5", gridRowEnd: "6" }}>
         <Marquee gradient={false} speed={0.5}>
           {
-            events?.map(ev=>{
+            events?.map(ev => {
               let tempDate = ev.date;
               let results = (/(\d\d\d\d)-(\d\d)-(\d\d)/).exec(tempDate)
               let day = results!["3"]
               let month = results!["2"]
-              return <span style={{fontSize:"25pt", marginLeft:"500px", textShadow:"-5px -5px 10px rgb(200,200,200)"}}>{day}.{month}.&nbsp;{ev.event}&nbsp;</span>
+              return <span style={{ fontSize: "25pt", marginLeft: "500px", textShadow: "-5px -5px 10px rgb(200,200,200)" }}>{day}.{month}.&nbsp;{ev.event}&nbsp;</span>
             })
           }
-          </Marquee>
-          </div>
+        </Marquee>
+      </div>
     </div>
   );
 }
