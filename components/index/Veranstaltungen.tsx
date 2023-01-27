@@ -28,7 +28,6 @@ const Veranstaltungen = ({token, useSpotify, year, refreshToken, useVirtualDj, v
         axiosInstance.get('http://localhost:5000/getNextEvents').then((res) => {
             setAngle(360 / res.data.length)
             getNextEvents(res.data)
-
         })
         let interv = setInterval(() => {
             setCurrIndex(index => index + 1)
