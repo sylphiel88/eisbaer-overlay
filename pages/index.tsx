@@ -12,6 +12,7 @@ import DjListTool from "../components/index/DjListTool/DjListTool";
 import ViewWindow from "../components/index/ViewWindow";
 import Veranstaltungen from "../components/index/Veranstaltungen";
 import IntroJan from "../components/index/IntroJan";
+import IntroYoung from "../components/index/IntroYoung";
 
 
 const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: string}> = ({recordSongs, client_id, client_secret}) => {
@@ -33,7 +34,7 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
   const [introSong, setIntroSong] = useState<boolean>(false)
   const [introSound, setIntroSound] = useState<HTMLAudioElement>()
 
-  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan", "Veranstaltungen", "Jan Intro"];
+  const views = ["Now Playing", "Slotmachine", "Youtube", "Playlisten", "Dj-Plan", "Veranstaltungen", "Jan Intro", "Modern Intro"];
 
 
   useEffect(()=>{
@@ -180,7 +181,8 @@ const Home: NextPage<{recordSongs: boolean, client_id: string, client_secret: st
                 useVirtualDj={useVirtualDJ}
                 virtualDJData={virtualDJData}
                 record = {recordSongs}/>}
-              {currView == 6 && <IntroJan setPage={setCurrView} setSong={setIntroSong} introSound={introSound}/>}
+              {currView == 6 && <IntroJan setPage={setCurrView} setSong={setIntroSong} introSound={introSound!}/>}
+              {currView == 7 && <IntroYoung/>}
           </div>
         </div></ViewWindow>}
       </main>
