@@ -42,3 +42,4 @@ docker-compose.yml
 overlay.tar
 styles/style.css
 styles/style.css.map
+*.mp4
