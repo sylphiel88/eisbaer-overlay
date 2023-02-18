@@ -145,7 +145,7 @@ export default function SpotifyNowPlaying(props: {
           { refresh_token: props.refreshToken },
           { headers: { "content-type": "application/json" } }
         )
-        .then((response) => setResponse(response.data))
+        .then((response) => response!==undefined && response !== null ? setResponse(response.data): null)
         .finally(() => {
           setTimeout(() => setRefreshSpotify(refreshSpotify + 1), 1000);
         });
@@ -209,7 +209,7 @@ export default function SpotifyNowPlaying(props: {
         )}
       </div>
       <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: "column", justifyContent: "center", gridColumnStart: "1", gridColumnEnd: "12", gridRowStart: "5", gridRowEnd: "6" }}>
-        <Marquee gradient={false} speed={0.5}>
+        <Marquee gradient={false} speed={100}>
           {
             events?.map(ev => {
               let tempDate = ev.date;
