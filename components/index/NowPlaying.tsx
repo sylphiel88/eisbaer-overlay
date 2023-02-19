@@ -91,13 +91,13 @@ export default function SpotifyNowPlaying(props: {
               },
             ],
             album: {
-              images: [{url:"http://localhost:3000/futureworld.jpg"}],
+              images: [{ url: "http://localhost:3000/futureworld.jpg" }],
             },
           },
         });
       }
     }
-  }, [props.useSpotify, props.useVirtualDj]);
+  }, [props.useSpotify, props.useVirtualDj, props.intro]);
 
   useEffect(() => {
     if (props.record) {
@@ -139,21 +139,26 @@ export default function SpotifyNowPlaying(props: {
 
   function getCurrentTitle(e: React.MouseEvent<HTMLButtonElement> | undefined) {
     if (props.useSpotify && !props.useVirtualDj) {
-      axios
-        .post(
-          `http://localhost:3000/api/spotify/spotify`,
-          { refresh_token: props.refreshToken },
-          { headers: { "content-type": "application/json" } }
-        )
-        .then((response) => response!==undefined && response !== null ? setResponse(response.data): null)
-        .finally(() => {
-          setTimeout(() => setRefreshSpotify(refreshSpotify + 1), 1000);
-        });
+      if (refreshSpotify % 4 === 0) {
+        axios
+          .post(
+            `http://localhost:3000/api/spotify/spotify`,
+            { refresh_token: props.refreshToken },
+            { headers: { "content-type": "application/json" } }
+          )
+          .then((response) => response !== undefined && response !== null ? setResponse(response.data) : null)
+          .finally(() => {
+            setTimeout(() => setRefreshSpotify(refreshSpotify + 1), 920);
+          });
+      } else {
+        setCurrPos(() => currPos + 1000)
+        setTimeout(() => setRefreshSpotify(refreshSpotify + 1), 920);
+      }
     } else if (props.useVirtualDj) {
       axios.get(
         `http://localhost:5000/getCurrentSong`)
         .then((res) => {
-          setResponse(response.data)
+          setResponse(res.data)
         })
     }
   }
